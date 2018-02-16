@@ -1,0 +1,8 @@
+.hint {
+  padding: 10px;
+}
+
+.hint>h5{
+  margin-bottom: 10px;
+  font-weight: bold;
+}

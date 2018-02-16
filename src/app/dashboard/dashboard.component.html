@@ -1,0 +1,32 @@
+<h2>Dasboard</h2>
+<a class="col-md-3" [routerLink]="['/calculator']">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>+</h2>
+    </div>
+  </div>
+</a>
+<app-dashboard-item *ngFor="let entry of entryList; let i = index">
+  <a class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title" style="display:inline-block">{{ entry.title }}</h3>
+        <div style="display:inline" class="dropdown" appDropdown contentEditable>
+          <a style="cursor:pointer" class="dropdown-toogle">
+            <span class="glyphicon glyphicon-option-vertical pull-right"></span>
+          </a>
+          <ul class="dropdown-menu">
+    				<li><a style="cursor:pointer;" (click)="onDelete(i)">Delete</a></li>
+    				<li><a style="cursor:pointer;" [routerLink]="['/calculator',i]">Edit</a></li>
+    			</ul>
+        </div>
+      </div>
+      <a [routerLink]="['/calculator', i]">
+        <div class="panel-body">
+          <p>{{ entry.createdAt }}</p>
+        </div>
+      </a>
+    </div>
+  </a>
+
+</app-dashboard-item>
