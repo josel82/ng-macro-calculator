@@ -7,9 +7,9 @@ export class CalculatorService {
       return  Math.floor((10 * weight * .4536) + (6.25 * height * 2.54) - (5 * age) + 5);
     }else if(gender === 0 && unit === 'metric'){
       return Math.floor((10 * weight) + (6.25 * height) - (5 * age) + 5);
-    }else if(gender === 0 && unit === 'imperial'){
+    }else if(gender === 1 && unit === 'imperial'){
       return Math.floor((10 * weight * .4536) + (6.25 * height * 2.54) - (5 * age) - 161);
-    }else if(gender === 0 && unit === 'metric'){
+    }else if(gender === 1 && unit === 'metric'){
       return Math.floor((10 * weight) + (6.25 * height) - (5 * age) - 161);
     }
   }

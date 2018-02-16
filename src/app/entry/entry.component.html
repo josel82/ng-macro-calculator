@@ -1,6 +1,5 @@
-
-<form [formGroup]="inputForm" (ngSubmit)="onCalculate()">
-  <div class="row">
+<div class="row">
+  <form [formGroup]="inputForm" (ngSubmit)="onCalculate()">
     <div class="col-md-6">
       <div class="form-group">
         <label for="gender">Gender:</label>
@@ -71,7 +70,7 @@
                    aria-haspopup="true"
                    aria-expanded="true"
                    >
-                   TDEE: (kcal/day)
+                   ? TDEE: (kcal/day)
             </label>
             <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
       				<h5>Total Daily Calorie Expenditure</h5>
@@ -96,11 +95,11 @@
                    aria-haspopup="true"
                    aria-expanded="true"
                    >
-                   BMR: (kcal/day)
+                   ? BMR: (kcal/day)
             </label>
             <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
       				<h5>Basal Methabolic Rate</h5>
-              <p>This is the amount of calories your body needs for breading and generating heat.</p>
+              <p>This is the amount of calories your body needs for breathing and generating heat.</p>
       			</div>
           </div>
 
@@ -123,5 +122,5 @@
           Back
       </button>
     </div>
-  </div>
-</form>
+  </form>
+</div>

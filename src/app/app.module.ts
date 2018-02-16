@@ -17,8 +17,10 @@ import { HintDropdownDirective } from './directives/hint-dropdown.directive';
 import { ModalDirective } from './directives/modal.directive';
 import { PromptModalComponent } from './modals/prompt-modal/prompt-modal.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
+import { LandingComponent } from './landing/landing.component';
 
 const appRoutes: Routes = [
+  {path: '', component: LandingComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'calculator', component: EntryComponent},
   {path: 'calculator/:index', component: EntryComponent}
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     HintDropdownDirective,
     ModalDirective,
     PromptModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

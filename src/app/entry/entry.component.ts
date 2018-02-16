@@ -1,11 +1,9 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { StorageService } from '../services/storage.service';
 import { CalculatorService } from '../services/calculator.service';
-import { PromptModalComponent } from '../modals/prompt-modal/prompt-modal.component';
-import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { ModalService } from '../services/modal.service';
 import { Entry } from '../models/entry.model';
 
@@ -14,7 +12,7 @@ import { Entry } from '../models/entry.model';
   templateUrl: './entry.component.html',
   styleUrls: ['./entry.component.css']
 })
-export class EntryComponent{
+export class EntryComponent implements OnInit{
   private title: string = '';
   private dailyCal: number;
   private bmr:number;
@@ -109,7 +107,7 @@ export class EntryComponent{
         newEntry.title = response;
         this.stgService.edit(this.route.snapshot.params['index'], newEntry);
         this.isChanged = false;
-        this.onBack();
+        this.router.navigate(['dashboard']);
       })
     }else{
       data.modalTitle = 'Saving new entry';
