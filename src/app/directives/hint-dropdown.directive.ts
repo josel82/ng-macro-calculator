@@ -9,12 +9,16 @@ export class HintDropdownDirective {
 
   @HostBinding('class.open') isOpen = false;
 
-  @HostListener('mouseenter') open(){
+  @HostListener('mouseenter') hoverOpen(){
     this.openWithDelay = setTimeout(()=>{
       this.isOpen = true;
-    },2000);
+    },1500);
   }
-  @HostListener('click') @HostListener('mouseleave') close(){
+  @HostListener('click') clickOpen(){
+    this.isOpen = !this.isOpen;
+    clearTimeout(this.openWithDelay);
+  }
+  @HostListener('mouseleave') close(){
     this.isOpen = false;
     clearTimeout(this.openWithDelay);
   }

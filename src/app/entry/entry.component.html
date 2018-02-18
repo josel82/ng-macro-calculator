@@ -3,6 +3,10 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="gender">Gender:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('gender').valid && inputForm.get('gender').touched">
+              Invalid input!
+        </span>
         <select class="form-control" name="gender" formControlName="gender">
           <option value="1">Female</option>
           <option value="0">Male</option>
@@ -10,18 +14,34 @@
       </div>
       <div class="form-group">
         <label for="age">Age:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('age').valid && inputForm.get('age').touched">
+              Invalid input!
+        </span>
         <input type="number" name="age" class="form-control" formControlName="age">
       </div>
       <div class="form-group">
         <label for="weight">Weight</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('weight').valid && inputForm.get('weight').touched">
+              Invalid input!
+        </span>
         <input type="number" name="weight" class="form-control" formControlName="weight">
       </div>
       <div class="form-group">
         <label for="height">Height</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('height').valid && inputForm.get('height').touched">
+              Invalid input!
+        </span>
         <input type="number" name="height" class="form-control" formControlName="height">
       </div>
       <div class="form-group">
         <label for="activity">Level of Activity:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('activity').valid && inputForm.get('activity').touched">
+              Invalid input!
+        </span>
         <select class="form-control" name="activity" formControlName="activity">
           <option value="1.2">Sedentary</option>
           <option value="1.375">Light Active</option>
@@ -32,6 +52,10 @@
       </div>
       <div class="form-group">
         <label for="goal">Goal:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('goal').valid && inputForm.get('goal').touched">
+              Invalid input!
+        </span>
         <select class="form-control" name="goal" formControlName="goal">
           <option value="1.15">Gain mass</option>
           <option value="1">Maintain weight</option>
@@ -40,6 +64,10 @@
       </div>
       <div class="form-group">
         <label for="unit">Unit system:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('unit').valid && inputForm.get('unit').touched">
+              Invalid input!
+        </span>
         <select class="form-control" name="unit" formControlName="unit">
           <option value="metric">Kg/cm/yrs</option>
           <option value="imperial">lbs/inch/yrs</option>
@@ -48,79 +76,113 @@
       <button type="submit" name="save" class="btn btn-primary">Calculate</button>
     </div>
     <div class="col-md-6">
-      <div class="row">
+      <div class="row" appDinamicHeight>
         <div class="col-xs-12 text-right">
-          <h3>Daily Calories</h3>
-          <h2>{{ dailyCal }} cals</h2>
-          <p>Carbs</p>
-          <p><strong>{{ carbs }} g</strong></p>
-          <p>Protein</p>
-          <p><strong>{{ protein }} g</strong></p>
-          <p>Fats</p>
-          <p><strong>{{ fat }} g</strong></p>
-        </div>
-      </div>
-      <div class="row text-left">
-        <div class="form-group col-xs-3 pull-right">
-          <div class="dropdown" appHintDropdown>
-            <label for="tdee"
-                   class="dropdown-toogle"
-                   id="tdee-hint"
-                   data-toggle="dropdown"
-                   aria-haspopup="true"
-                   aria-expanded="true"
-                   >
-                   ? TDEE: (kcal/day)
-            </label>
-            <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
-      				<h5>Total Daily Calorie Expenditure</h5>
-              <p>This is the amount of calories you burn per day, based on your level of activity</p>
-      			</div>
-          </div>
-          <div class="input-group">
-            <div class="input-group-addon" (click)="onRefreshTDEE()">
-              <span class="glyphicon glyphicon-refresh"></span>
+          <span class="help-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</span>
+          <div class="calories-result" *ngIf="dailyCal">
+            <div class="dropdown" appHintDropdown>
+              <h3>
+                <span class="glyphicon glyphicon-question-sign"></span>
+                Daily Calories
+              </h3>
+              <!-- dropdown-menu ===========================================-->
+              <div class="dropdown-menu hint" aria-labelledby="result-hint">
+                <h5>Daily Calorie Goal</h5>
+                <p>This is the daily maximun amount of calories you should consume in order to hit your fitness goal.</p>
+              </div><!-- dropdown-menu end -->
             </div>
-            <input type="text" name="tdee" class="form-control" formControlName="tdee">
+            <h2>{{ dailyCal }} kcal/day</h2>
           </div>
-        </div>
-      </div>
-      <div class="row text-left">
-        <div class="form-group col-xs-3 pull-right">
-          <div class="dropdown" appHintDropdown>
-            <label for="bmr"
-                   class="dropdown-toogle"
-                   id="bmr-hint"
-                   data-toggle="dropdown"
-                   aria-haspopup="true"
-                   aria-expanded="true"
-                   >
-                   ? BMR: (kcal/day)
-            </label>
-            <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
-      				<h5>Basal Methabolic Rate</h5>
-              <p>This is the amount of calories your body needs for breathing and generating heat.</p>
-      			</div>
-          </div>
-
-          <div class="input-group">
-            <div class="input-group-addon" (click)="onRefreshBMR()">
-              <span class="glyphicon glyphicon-refresh"></span>
+          <div class="macros-result" *ngIf="carbs && protein && fat">
+            <div class="dropdown" appHintDropdown>
+              <h4>
+                <span class="glyphicon glyphicon-question-sign"></span>
+                Macros Split
+              </h4>
+              <!-- dropdown-menu ===========================================-->
+              <div class="dropdown-menu hint" aria-labelledby="result-hint">
+                <h5>Macros Split</h5>
+                <p>This is your Daily Calorie Goal split into the three macro nutrients. These is the maximun amount of
+                  <strong>Carbohydrates</strong>,
+                  <strong>Protein</strong>  and
+                  <strong>Fats</strong>,
+                  in grams per day, you should consume in order to hit your fitness goal
+                </p>
+              </div><!-- dropdown-menu end -->
             </div>
-            <input type="text" name="bmr" class="form-control" formControlName="bmr">
+            <p>Carbs</p>
+            <p><strong>{{ carbs }} g</strong></p>
+            <p>Protein</p>
+            <p><strong>{{ protein }} g</strong></p>
+            <p>Fats</p>
+            <p><strong>{{ fat }} g</strong></p>
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-success" (click)="onSave()">Save</button>
-      <button type="button" name="delete" class="btn btn-danger" (click)="onDelete()">Delete</button>
-      <button
-          type="button"
-          name="back"
-          class="btn btn-default"
-          (click)="onBack()">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-          Back
-      </button>
+      <div class="row" appDinamicHeight>
+        <div class="col-sm-4 pull-right text-left">
+          <div class="form-group">
+            <div class="dropdown" appHintDropdown>
+              <label for="tdee"
+                     class="dropdown-toogle"
+                     id="tdee-hint"
+                     data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="true"
+                     >
+                     <span class="glyphicon glyphicon-question-sign"></span>
+                     TDEE: (kcal/day)
+              </label>
+              <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
+        				<h5>Total Daily Calorie Expenditure</h5>
+                <p>This is the amount of calories you burn per day, based on your level of activity</p>
+        			</div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="onRefreshTDEE()" [disabled]="!inputForm.valid || inputForm.get('tdee').value <= bmr">
+                  <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+              </span>
+              <input type="number" name="tdee" class="form-control" formControlName="tdee">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="dropdown" appHintDropdown>
+              <label for="bmr"
+                     class="dropdown-toogle"
+                     id="bmr-hint"
+                     data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="true"
+                     >
+                     <span class="glyphicon glyphicon-question-sign"></span>
+                     BMR: (kcal/day)
+              </label>
+              <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
+        				<h5>Basal Methabolic Rate</h5>
+                <p>This is the daily amount of calories your body needs for breathing and generating heat.</p>
+        			</div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="onRefreshBMR()" [disabled]="!inputForm.valid || inputForm.get('bmr').value < 1000">
+                  <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+              </span>
+              <input type="number" name="bmr" class="form-control" formControlName="bmr">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 btn-column">
+          <div class="btn-group" role="group" aria-label="buttons">
+            <div class="btn btn-success" type="button" (click)="onSave()">Save</div>
+            <div class="btn btn-danger" type="button" (click)="onDelete()">Delete</div>
+            <div class="btn btn-default" type="button" (click)="onBack()">
+              <span class="glyphicon glyphicon-chevron-left"></span>Back</div>
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </div>

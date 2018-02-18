@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+
+import{ ListenerService } from './services/listener.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+
+  constructor(private listener: ListenerService){}
+  @HostListener('document:click', ['$event']) clickOut(event){
+    this.listener.clickEvent.next(event);
+  }
+
 }

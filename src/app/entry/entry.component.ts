@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { StorageService } from '../services/storage.service';
@@ -33,13 +33,13 @@ export class EntryComponent implements OnInit{
   ngOnInit(){
     let entry = this.stgService.getItem(this.route.snapshot.params['index']);
     this.inputForm = new FormGroup({
-      'gender': new FormControl(entry ? entry.gender : null),
-      'age': new FormControl(entry ? entry.age : null),
-      'weight': new FormControl(entry ? entry.weight : null),
-      'height': new FormControl(entry ? entry.height : null),
-      'activity': new FormControl(entry ? entry.activityMult : null),
-      'goal': new FormControl(entry ? entry.goalMult : null),
-      'unit': new FormControl(entry ? 'metric' : 'metric'),
+      'gender': new FormControl(entry ? entry.gender : null, Validators.required),
+      'age': new FormControl(entry ? entry.age : null, Validators.required),
+      'weight': new FormControl(entry ? entry.weight : null, Validators.required),
+      'height': new FormControl(entry ? entry.height : null, Validators.required),
+      'activity': new FormControl(entry ? entry.activityMult : null, Validators.required),
+      'goal': new FormControl(entry ? entry.goalMult : null, Validators.required),
+      'unit': new FormControl(entry ? 'metric' : 'metric', Validators.required),
       'tdee': new FormControl(entry ? entry.tdee : null),
       'bmr': new FormControl(entry ? entry.bmr : null)
     });
@@ -56,6 +56,9 @@ export class EntryComponent implements OnInit{
   }
 
   onCalculate(){
+    if(this.inputForm.invalid){
+      return;
+    }
     let form = this.inputForm.value;
     this.bmr = this.calculator.calcBMR(+form.gender, form.weight, form.height, form.age, form.unit);
     this.tdee = this.calculator.calcTDEE(this.bmr, form.activity);
@@ -87,6 +90,7 @@ export class EntryComponent implements OnInit{
     this.inputForm.patchValue({tdee: this.tdee})
     this.onRefreshTDEE();
     this.isChanged = true;
+    console.log(this.inputForm.get('bmr').value);
   }
 
   onSave(){
@@ -141,5 +145,8 @@ export class EntryComponent implements OnInit{
     this.modalService.showConfirmModal(modalData, (response)=>{
       this.router.navigate(['dashboard']);
     });
+  }
+  onEnable(control:FormControl){
+    control.enable();
   }
 }
