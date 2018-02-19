@@ -95,7 +95,7 @@ export class EntryComponent implements OnInit{
 
   onSave(){
     let form = this.inputForm.value;
-    let data = {modalTitle: '', modalMsg: '', entryTitle: '', successBtn: ''};
+    let data = {modalTitle: '', modalMsg: '', usrInput: '', successBtn: ''};
     let newEntry = new Entry( '', form.gender, form.age,
                               form.weight, form.height, form.activity,
                               form.goal, this.dailyCal, this.carbs,
@@ -106,7 +106,7 @@ export class EntryComponent implements OnInit{
       data.modalTitle = 'Confirmation';
       data.modalMsg = 'Do you want to override your entry?';
       data.successBtn = 'Ok';
-      data.entryTitle = this.title;
+      data.usrInput = this.title;
       this.modalService.showPromptModal(data, (response)=>{
         newEntry.title = response;
         this.stgService.edit(this.route.snapshot.params['index'], newEntry);
@@ -117,7 +117,7 @@ export class EntryComponent implements OnInit{
       data.modalTitle = 'Saving new entry';
       data.modalMsg = 'Insert a title for your new entry';
       data.successBtn = 'Save';
-      data.entryTitle = this.title;
+      data.usrInput = this.title;
       this.modalService.showPromptModal(data, (response)=>{
         newEntry.title = response;
         this.stgService.push(newEntry);

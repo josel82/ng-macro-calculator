@@ -1,3 +1,11 @@
 .modal-body > h3{
   margin-bottom: 20px;
 }
+
+input.ng-invalid.ng-touched
+{
+  border: 1px solid red;
+}
+span.help-block.alert-msg{
+  color:red;
+}

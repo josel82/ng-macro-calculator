@@ -15,7 +15,7 @@ export class ModalService {
                               .subscribe((result)=>{
                                   //We get modal result
                                   if(result) {
-                                     callback(result.inputTitle);
+                                     callback(result.usrInput);
                                   }
                               });
             //We can close modal calling disposable.unsubscribe();

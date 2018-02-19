@@ -6,10 +6,19 @@
        </div>
        <div class="modal-body">
           <h3>{{ modalMsg }}</h3>
-          <input class="form-control" type="text" name="title" #input>
+          <form [formGroup]="promptForm" (ngSubmit)="onSubmit()">
+            <input class="form-control" type="text" name="prompt" formControlName="prompt">
+            <span class="help-block alert-msg" *ngIf="!promptForm.valid && promptForm.touched">Invalid input!</span>
+          </form>
        </div>
        <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="confirm()">{{ successBtn }}</button>
+          <button type="button"
+                  class="btn btn-success"
+                  (click)="confirm()"
+                  [disabled]="!promptForm.valid && promptForm.touched"
+                  >
+            {{ successBtn }}
+          </button>
           <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
        </div>
      </div>
