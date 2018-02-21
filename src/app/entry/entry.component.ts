@@ -34,6 +34,7 @@ export class EntryComponent implements OnInit{
   }
   private stored: boolean = false;
   private isChanged: boolean = false;
+  private loggedIn:boolean = false;
   private inputForm: FormGroup;
 
   constructor(private stgService: StorageService,
@@ -63,6 +64,8 @@ export class EntryComponent implements OnInit{
       this.values.carbs = entry.carbs;
       this.values.fat = entry.fat;
       this.stored = true;
+      //Fake login
+      this.loggedIn = true;
     }
     //set the form
     this.inputForm = this.onFormInit(this.values);
