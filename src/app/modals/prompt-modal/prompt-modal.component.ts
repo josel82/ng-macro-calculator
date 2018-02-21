@@ -42,7 +42,7 @@ export class PromptModalComponent extends SimpleModalComponent<ConfirmModel, Res
   }
 
   forbbidenChars(control: FormControl):{[s:string]:boolean} {
-    let regexp = new RegExp('[^A-Za-z0-9]');
+    let regexp = new RegExp('[^A-Za-z0-9_\\s]');
     if(regexp.test(control.value)){
       return {'forbbiden': true}
     }

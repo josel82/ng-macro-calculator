@@ -5,8 +5,8 @@ export class StorageService {
 
   entryEvent = new EventEmitter<Entry[]>();
   entries: Entry[]=[
-    new Entry('Low Carb',0, 35, 86, 182, 1.55, 1.15, 3000, 300, 200, 50, 2637, 1200),
-    new Entry('Bulking',0, 35, 86, 182, 1.375, .85, 1880, 200, 150, 25, 4503, 1200)
+    new Entry('Low Carb',0, 35, 86, 182, 1.55, 1.15, 3000, 300, 200, 50, 2637, 1200, false),
+    new Entry('Bulking',0, 35, 86, 182, 1.375, .85, 1880, 200, 150, 25, 4503, 1200, false)
   ];
 
   push(data: Entry){

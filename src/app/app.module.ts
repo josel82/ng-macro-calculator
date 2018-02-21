@@ -18,6 +18,7 @@ import { StorageService } from './services/storage.service';
 import { CalculatorService } from './services/calculator.service';
 import { ModalService } from './services/modal.service';
 import { ListenerService } from './services/listener.service';
+import { UnitConverterService } from './services/unit-converter.service';
 //************************  Directives  ***************************
 import { DropdownDirective } from './directives/dropdown.directive';
 import { HintDropdownDirective } from './directives/hint-dropdown.directive';
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     StorageService,
     CalculatorService,
     ModalService,
-    ListenerService
+    ListenerService,
+    UnitConverterService
   ],
   bootstrap: [AppComponent]
 })
