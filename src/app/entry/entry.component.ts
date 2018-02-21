@@ -84,28 +84,25 @@ export class EntryComponent implements OnInit{
   }
 
   onCalculate(){
-    if(this.inputForm.valid){
-      let form = this.inputForm.value;
-      if(form.unit === 'true'){// Checks if the unit system is imperial
-        this.values.form.weight = Math.floor(this.unitConverter.poundToKilo(form.weight));
-        this.values.form.height = Math.floor(this.unitConverter.inchToCm(form.height));
-      }else{
-        this.values.form.weight = form.weight;
-        this.values.form.height = form.height;
-      }
-      this.values.bmr = this.calculator.calcBMR(+form.gender, this.values.form.weight, this.values.form.height, form.age);
-      this.values.tdee = this.calculator.calcTDEE(this.values.bmr, form.activity);
-      this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, +form.goal);
-      this.values.protein = this.calculator.calcProtein(form.weight, form.unit);
-      this.values.fat = this.calculator.calcFat(this.values.dailyCal);
-      this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
-      this.inputForm.patchValue({
-        tdee: this.values.tdee,
-        bmr: this.values.bmr
-      });
-      this.isChanged = true;
+    let form = this.inputForm.value;
+    if(form.unit === 'true'){// Checks if the unit system is imperial
+      this.values.form.weight = Math.floor(this.unitConverter.poundToKilo(form.weight));
+      this.values.form.height = Math.floor(this.unitConverter.inchToCm(form.height));
+    }else{
+      this.values.form.weight = form.weight;
+      this.values.form.height = form.height;
     }
-
+    this.values.bmr = this.calculator.calcBMR(+form.gender, this.values.form.weight, this.values.form.height, form.age);
+    this.values.tdee = this.calculator.calcTDEE(this.values.bmr, form.activity);
+    this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, +form.goal);
+    this.values.protein = this.calculator.calcProtein(form.weight, form.unit);
+    this.values.fat = this.calculator.calcFat(this.values.dailyCal);
+    this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
+    this.inputForm.patchValue({
+      tdee: this.values.tdee,
+      bmr: this.values.bmr
+    });
+    this.isChanged = true;
   }
 
   onRefreshTDEE(){
@@ -126,6 +123,10 @@ export class EntryComponent implements OnInit{
     this.onRefreshTDEE();
     this.isChanged = true;
     console.log(this.inputForm.get('bmr').value);
+  }
+
+  onClear(){
+    this.inputForm.reset();
   }
 
   onSave(){
