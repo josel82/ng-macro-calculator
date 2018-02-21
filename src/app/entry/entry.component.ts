@@ -95,7 +95,7 @@ export class EntryComponent implements OnInit{
     this.values.bmr = this.calculator.calcBMR(+form.gender, this.values.form.weight, this.values.form.height, form.age);
     this.values.tdee = this.calculator.calcTDEE(this.values.bmr, form.activity);
     this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, +form.goal);
-    this.values.protein = this.calculator.calcProtein(form.weight, form.unit);
+    this.values.protein = this.calculator.calcProtein(this.values.form.weight, this.values.form.unit);
     this.values.fat = this.calculator.calcFat(this.values.dailyCal);
     this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
     this.inputForm.patchValue({
@@ -109,7 +109,7 @@ export class EntryComponent implements OnInit{
     let form = this.inputForm.value;
     this.values.tdee = form.tdee;
     this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, form.goal);
-    this.values.protein = this.calculator.calcProtein(form.weight, form.unit);
+    this.values.protein = this.calculator.calcProtein(this.values.form.weight, this.values.form.unit);
     this.values.fat = this.calculator.calcFat(this.values.dailyCal);
     this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
     this.isChanged = true;
