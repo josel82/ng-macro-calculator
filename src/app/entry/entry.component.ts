@@ -98,7 +98,7 @@ export class EntryComponent implements OnInit{
     this.values.bmr = this.calculator.calcBMR(+form.gender, this.values.form.weight, this.values.form.height, form.age);
     this.values.tdee = this.calculator.calcTDEE(this.values.bmr, form.activity);
     this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, +form.goal);
-    this.values.protein = this.calculator.calcProtein(this.values.form.weight, this.values.form.unit);
+    this.values.protein = this.calculator.calcProtein(this.values.form.weight);
     this.values.fat = this.calculator.calcFat(this.values.dailyCal);
     this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
     this.inputForm.patchValue({
@@ -107,12 +107,26 @@ export class EntryComponent implements OnInit{
     });
     this.isChanged = true;
   }
+//In Development =============================================================
+//============================================================================
+  unloadForm(form){
+
+    this.values.form.gender = form.gender;
+    this.values.form.age = form.age;
+    this.values.form.weight = 0;
+    this.values.form.height = 0;
+    this.values.form.activity = form.activityMult;
+    this.values.form.goal = form.goalMult;
+    this.values.form.unit = form.isImperial;
+  }
+  //In Development =============================================================
+  //============================================================================
 
   onRefreshTDEE(){
     let form = this.inputForm.value;
     this.values.tdee = form.tdee;
     this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, form.goal);
-    this.values.protein = this.calculator.calcProtein(this.values.form.weight, this.values.form.unit);
+    this.values.protein = this.calculator.calcProtein(this.values.form.weight);
     this.values.fat = this.calculator.calcFat(this.values.dailyCal);
     this.values.carbs = this.calculator.calcCarb(this.values.dailyCal, this.values.protein, this.values.fat);
     this.isChanged = true;
@@ -120,7 +134,8 @@ export class EntryComponent implements OnInit{
 
   onRefreshBMR(){
     let form = this.inputForm.value;
-    this.values.tdee = this.calculator.calcTDEE(form.bmr, form.activity);
+    this.values.bmr = form.bmr;
+    this.values.tdee = this.calculator.calcTDEE(this.values.bmr, form.activity);
     this.values.dailyCal = this.calculator.calcTotalCal(this.values.tdee, form.goal);
     this.inputForm.patchValue({tdee: this.values.tdee})
     this.onRefreshTDEE();

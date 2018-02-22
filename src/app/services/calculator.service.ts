@@ -24,12 +24,8 @@ export class CalculatorService {
     return Math.floor(tdee * goal);
   }
 
-  calcProtein(weight, isImperial){
-    if(isImperial){
-      return Math.floor(weight * .8);
-    }else{
+  calcProtein(weight){  
       return Math.floor(weight * 1.8);
-    }
   }
 
   calcCarb(totalCal, prot, fat){
