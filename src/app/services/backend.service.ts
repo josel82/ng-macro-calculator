@@ -21,16 +21,19 @@ export class BackendService {
 
   deleteRequest(path, token:{key:string, value:string}|null, resType): Observable<any> {
     const url = `${this.endPoint}${path}`;
-    let headers = this.setHeader('Content-Type', 'text/plain');
+    let headers = this.setHeader('Content-Type', 'application/json');
     if(token){
        headers = headers.append(token.key, token.value);
     }
     return this.http.delete(url, {headers: headers, observe: 'response', responseType:resType});
   }
 
-  getEntries(token:string){
-    const url = `${this.endPoint}/entries`;
-    const headers = new HttpHeaders().set('x-auth', token);
+  getRequest(path,token:{key:string, value:string}|null): Observable<any>{
+    const url = `${this.endPoint}${path}`;
+    let headers = this.setHeader('Content-Type', 'application/json');
+    if(token){
+       headers = headers.append(token.key, token.value);
+    }
     return this.http.get(url, {headers:headers});
   }
 
