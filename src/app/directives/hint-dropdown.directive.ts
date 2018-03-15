@@ -14,7 +14,14 @@ export class HintDropdownDirective {
       this.isOpen = true;
     },2000);
   }
-  @HostListener('click') @HostListener('mouseleave') close(){
+  @HostListener('click') openToggle(){
+
+      this.isOpen = !this.isOpen;
+      clearTimeout(this.openWithDelay);
+    }
+
+  @HostListener('mouseleave') close(){
+
     this.isOpen = false;
     clearTimeout(this.openWithDelay);
   }
