@@ -1,27 +1,3 @@
-/*****************************  DropDowns  ************************************/
-.hint {
-  padding: 10px;
-}
-.hint>h5{
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-.glyphicon-question-sign{
-  font-size: 16px;
-}
-
-/*********************************  Form  *************************************/
-
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched
-{
-  border: 1px solid red;
-}
-span.help-block.alert-msg {
-  margin: 0 0 5px;
-  color:red;
-}
-
 /******************************************************************************/
 /****************************  Media Queries **********************************/
 /******************************************************************************/

@@ -8,18 +8,18 @@ export class UnitConverterService {
   constructor() { }
 
   poundToKilo(input):number{
-    return input * Lb.toKg;
+    return Math.round(input * Lb.toKg);
   }
 
   kiloToPound(input):number{
-    return input * Kg.toLb;
+    return Math.round(input * Kg.toLb);
   }
 
   cmToInch(input){
-    return input * Cm.toInch;
+    return Math.round(input * Cm.toInch);
   }
 
   inchToCm(input){
-    return input * Inch.toCm;
+    return Math.round(input * Inch.toCm);
   }
 }

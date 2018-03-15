@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DropdownDirective implements OnDestroy{
 
-  listenerSubscription:Subscription;
+  listenerSubs:Subscription;
   clicked = false;
 
   @HostBinding('class.open') isOpen = false;
@@ -16,7 +16,7 @@ export class DropdownDirective implements OnDestroy{
   constructor(private listener:ListenerService){}
 
   ngOnDestroy(){
-    if(this.listenerSubscription){
+    if(this.listenerSubs){
       this.unsetListener();
     }
   }
@@ -26,7 +26,7 @@ export class DropdownDirective implements OnDestroy{
     this.clicked = true;
   }
   setListener(target){
-    this.listenerSubscription = this.listener.clickEvent.subscribe((event)=>{
+    this.listenerSubs = this.listener.clickEvent.subscribe((event)=>{
      if(target === event.target){
        this.isOpen = !this.isOpen;
      }else{
@@ -36,6 +36,6 @@ export class DropdownDirective implements OnDestroy{
     });
   }
   unsetListener(){
-    this.listenerSubscription.unsubscribe();
+    this.listenerSubs.unsubscribe();
   }
 }

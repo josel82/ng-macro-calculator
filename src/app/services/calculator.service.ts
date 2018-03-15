@@ -26,8 +26,27 @@ export class CalculatorService {
 
   constructor(private converter: UnitConverterService) { }
 
-  calcBMR(gender, weight, height, age){
+  calculate(form): { bmr: number,
+                     tdee: number,
+                     dailyCal: number,
+                     macros: { protein:number,
+                               fat:number,
+                               carbs:number}} {
+    let bmr = this.calcBMR(+form.gender, form.weight, form.height, form.age);
+    let tdee = this.calcTDEE(bmr, form.activityMult);
+    let dailyCal = this.calcTotalCal(tdee, form.goalMult);
+    let macros = this.splitMacros(dailyCal, form.weight);
+    return { bmr, tdee, dailyCal, macros}
+  }
 
+  splitMacros(dailyCal:number, weight:number): {protein:number, fat:number, carbs:number} {
+    let protein: number = this.calcProtein(weight);
+    let fat: number = this.calcFat(dailyCal);
+    let carbs: number = this.calcCarb(dailyCal, protein, fat);
+    return {protein, fat , carbs}
+  }
+
+  calcBMR(gender, weight, height, age){
     if(gender === 0){
       return Math.floor((this.bmrWeightMult * weight) + (this.bmrHeightMult * height) - (this.bmrAgeMult * age) + this.bmrMaleConst);
     }else if(gender === 1){

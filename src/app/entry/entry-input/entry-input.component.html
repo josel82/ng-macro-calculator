@@ -1,0 +1,80 @@
+<form [formGroup]="inputForm">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('gender').valid && inputForm.get('gender').touched">
+              Invalid input!
+        </span>
+        <br>
+        <label class="radio-inline"><input type="radio" name="gender" value="1" formControlName="gender">Female</label>
+        <label class="radio-inline"><input type="radio" name="gender" value="0" formControlName="gender">Male</label>
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('age').valid && inputForm.get('age').touched">
+              Invalid input!
+        </span>
+        <input type="number" name="age" class="form-control" formControlName="age">
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="weight">Weight</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('weight').valid && inputForm.get('weight').touched">
+              Invalid input!
+        </span>
+        <input type="number" name="weight" class="form-control" formControlName="weight">
+      </div>
+      <div class="form-group">
+        <label for="height">Height</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('height').valid && inputForm.get('height').touched">
+              Invalid input!
+        </span>
+        <input type="number" name="height" class="form-control" formControlName="height">
+      </div>
+      <div class="form-group">
+        <label for="activityMult">Level of Activity:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('activityMult').valid && inputForm.get('activityMult').touched">
+              Invalid input!
+        </span>
+        <select class="form-control" name="activityMult" formControlName="activityMult">
+          <option value="1.2">Sedentary</option>
+          <option value="1.375">Light Active</option>
+          <option value="1.55">Moderately Active</option>
+          <option value="1.725">Very Active</option>
+          <option value="1.9">Extremely Active</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="goalMult">Goal:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!inputForm.get('goalMult').valid && inputForm.get('goalMult').touched">
+              Invalid input!
+        </span>
+        <select class="form-control" name="goalMult" formControlName="goalMult">
+          <option value="1.15">Gain mass</option>
+          <option value="1">Maintain weight</option>
+          <option value="0.85">Lose weight</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="switch-container">
+        <label for="isImperial">Kg/cm - Lb/inch</label>
+        <label class="switch">
+          <input type="checkbox" name="isImperial" formControlName="isImperial">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</form>
