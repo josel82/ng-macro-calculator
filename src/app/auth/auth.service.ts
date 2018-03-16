@@ -27,8 +27,10 @@ export class AuthService {
         userId: response.body._id,
         token: response.headers.get('x-auth')
       }
-      this.localStorage.setItem('user', user).subscribe(()=>{});
-      this.router.navigate(['/dashboard']);
+      this.localStorage.setItem('user', user).subscribe(()=>{
+        this.router.navigate(['/dashboard']);
+      });
+
     },(error)=>{
       console.log(error);
     });
