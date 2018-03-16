@@ -26,6 +26,7 @@ import { UnitConverterService } from './services/unit-converter.service';
 import { ControlService } from './services/control.service';
 import { BackendService } from './services/backend.service';
 import { AuthService } from './auth/auth.service';
+import { DataService } from './services/data.service';
 //************************  Directives  ***************************
 import { DropdownDirective } from './directives/dropdown.directive';
 import { HintDropdownDirective } from './directives/hint-dropdown.directive';
@@ -81,7 +82,8 @@ const appRoutes: Routes = [
     UnitConverterService,
     ControlService,
     BackendService,
-    AuthService
+    AuthService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })

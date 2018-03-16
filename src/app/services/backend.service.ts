@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -10,13 +10,22 @@ export class BackendService {
   constructor(private http: HttpClient) { }
 
 
-  postRequest(path, input, token:{key:string, value:string}|null): Observable<any> {
+  postRequest(path, input, token:{key:string, value:string}|null):Observable<HttpResponse<any>> {
     const url = `${this.endPoint}${path}`;
     let headers = this.setHeader('Content-Type', 'application/json');
     if(token){
       headers = headers.append(token.key,token.value);
     }
     return this.http.post(url, input, {headers: headers, observe: 'response'});
+  }
+
+  patchRequest(path, input, token:{key:string, value:string}|null):Observable<any> {
+    const url = `${this.endPoint}${path}`;
+    let headers = this.setHeader('Content-Type', 'application/json');
+    if(token){
+      headers = headers.append(token.key,token.value);
+    }
+    return this.http.patch(url, input, {headers: headers, observe: 'response'});
   }
 
   deleteRequest(path, token:{key:string, value:string}|null, resType): Observable<any> {

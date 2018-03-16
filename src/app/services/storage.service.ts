@@ -11,25 +11,25 @@ export class StorageService {
   // ];
   entries: Entry[]=[];
 
-  push(data: Entry){
+  push(data:Entry){
     this.entries.push(data);
     this.entryEvent.emit(this.entries);
   }
-  edit(index:number, data: Entry){
+  edit(index:number, data ):void{
     this.entries[index] = data;
     this.entryEvent.emit(this.entries);
   }
-  delete(index:number){
+  delete(index:number):void{
     this.entries.splice(index, 1);
     this.entryEvent.emit(this.entries);
   }
-  getItems(){
+  getItems():Entry[]{
     return this.entries;
   }
-  getItem(index){
+  getItem(index):Entry{
     return this.entries[index];
   }
 
-  
+
 
 }

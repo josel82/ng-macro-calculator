@@ -5,8 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { ModalService } from '../services/modal.service';
 import { ControlService } from '../services/control.service';
+import { DataService } from '../services/data.service';
+import { AuthService } from '../auth/auth.service';
+import { default as config} from './save-modal.config';
 
 import { Entry } from '../models/entry.model';
+import { FormInput } from '../shared/form-input.interface';
+
 
 @Component({
   selector: 'app-entry',
@@ -16,16 +21,19 @@ import { Entry } from '../models/entry.model';
 export class EntryComponent implements OnInit{
 
   private formValues;
+  private entryTitle;
   private stored: boolean = false;
   private loggedIn:boolean = true;
-  private isChanged: boolean = false;
+  // private isChanged: boolean = false;
 
 
 
   constructor(private stgService: StorageService,
               private modalService: ModalService,
+              private auth: AuthService,
               private route: ActivatedRoute,
               private router: Router,
+              private dataService: DataService,
               private controlService: ControlService) { }
 
   ngOnInit(){
@@ -33,45 +41,54 @@ export class EntryComponent implements OnInit{
   onSubmit(values){
     this.formValues = values;
   }
-
-  onSave(){
-    let form = this.formValues;
-    let data = {modalTitle: '', modalMsg: '', usrInput: '', successBtn: ''};
-    let newEntry = new Entry( null, null,'', form.gender, form.age,
-                              form.weight, form.height, form.activityMult,
-                              form.goalMult, form.isImperial, null, null);
-    if(this.stored){
-      data.modalTitle = 'Confirmation';
-      data.modalMsg = 'Do you want to override your entry?';
-      data.successBtn = 'Ok';
-      data.usrInput = "title";
+  setEntryTitle(title){
+    this.entryTitle = title;
+  }
+  async onSave(){
+    const credentials = await this.auth.getCredentials();
+    if(!credentials){
+      console.log('No Credentials!');
+      this.router.navigate(['/login']);
+      return;
+    }
+    let newEntry = this.generateReqBody(this.formValues);
+    if(this.entryTitle){
+      let data = this.configureSaveModal('saved', this.entryTitle);
       this.modalService.showPromptModal(data, (response)=>{
-        newEntry.setTitle(response);
-        this.stgService.edit(this.route.snapshot.params['index'], newEntry);
-        this.isChanged = false;
-        this.router.navigate(['dashboard']);
-      })
+        newEntry.title = response;
+        let id = this.stgService.getItem(this.route.snapshot.params['index']).get_id();
+        this.dataService.editEntry(id ,newEntry, credentials.token)
+                          .then(()=>{
+                            this.dataService.downloadEntries();
+                            // this.isChanged = true;
+                            this.router.navigate(['dashboard']);
+                          });
+      });
     }else{
-      data.modalTitle = 'Saving new entry';
-      data.modalMsg = 'Insert a title for your new entry';
-      data.successBtn = 'Save';
-      data.usrInput = "title";
+      let data = this.configureSaveModal('new', '');
       this.modalService.showPromptModal(data, (response)=>{
-        newEntry.setTitle(response);
-        this.stgService.push(newEntry);
-        this.isChanged = false;
-        this.router.navigate(['dashboard']);
+        newEntry.title = response;
+        this.dataService.saveEntry(newEntry, credentials.token)
+                        .then(()=>{
+                          this.dataService.downloadEntries();
+                          // this.isChanged = false;
+                          this.router.navigate(['dashboard']);
+        },error=>console.log(error));
       });
     }
   }
-  onDelete(){
+  async onDelete(){
+    const credentials = await this.auth.getCredentials();
     let modalData = {
       modalTitle: 'Confirm',
       modalMsg: 'Are you sure you want to delete this entry?'
     }
     this.modalService.showConfirmModal(modalData, (result)=>{
-      this.stgService.delete(this.route.snapshot.params['index']);
-      this.router.navigate(['dashboard']);
+      let id = this.stgService.getItem(this.route.snapshot.params['index']).get_id();
+      this.dataService.deleteEntry(id, credentials.token).then(()=>{
+        this.dataService.downloadEntries();
+        this.router.navigate(['/dashboard']);
+      }).catch(error => console.log(error));
     });
   }
 
@@ -92,5 +109,28 @@ export class EntryComponent implements OnInit{
   onClear():void{
     this.controlService.clearForm.next();
   }
+
+  configureSaveModal(key:string, input){
+    let data = {modalTitle: '', modalMsg: '', usrInput: '', successBtn: ''};
+    data.modalTitle = config[key].modalTitle;
+    data.modalMsg = config[key].modalMsg;
+    data.successBtn = config[key].successBtn;
+    data.usrInput = input;
+    return data;
+  }
+
+  generateReqBody(form):FormInput{
+    return {
+            title: '',
+            gender: +form.gender,
+            age: form.age,
+            weight:form.weight,
+            height: form.height,
+            activityMult: +form.activityMult,
+            goalMult:+form.goalMult,
+            isImperial: form.isImperial
+          }
+  }
+
 
 }

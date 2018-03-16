@@ -9,7 +9,7 @@ export class ControlService {
   save = new Subject<any>();
   delete = new Subject<any>();
   back = new Subject<any>();
-  
+
   constructor() { }
 
 }

@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/take';
 
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 import { BackendService } from '../services/backend.service';
+import { UserCredentials } from './user-credentials.interface';
 
 interface AuthResponse{
   _id: string;
   email:string;
-}
-interface UserCredentials{
-  userId: string;
-  token: string;
 }
 
 @Injectable()
@@ -37,20 +34,17 @@ export class AuthService {
     });
   }
 
-  logoutUser(){
+  async logoutUser(){
     const path = '/users/me/token';
     const resType = 'text';
-    this.getCredentials().subscribe((credentials)=>{
-      let header = { key: 'x-auth', value: credentials.token }
+    const credentials = await this.getCredentials();
+    let header = { key: 'x-auth', value: credentials.token }
 
-      this.backend.deleteRequest(path, header, resType).subscribe((response: HttpResponse<any>)=>{
-        this.localStorage.clear().subscribe(()=>{});
+    this.backend.deleteRequest(path, header, resType).subscribe((response: HttpResponse<any>)=>{
+      this.localStorage.clear().subscribe(()=>{
         this.router.navigate(['/']);
       });
-    },(error)=>{
-      console.log(error);
     });
-
   }
 
   signupUser(input: {email:string, password: string}){
@@ -68,8 +62,11 @@ export class AuthService {
     });
   }
 
-  getCredentials(): Observable<UserCredentials>{
-    return this.localStorage.getItem<{userId:string, token:string}>('user');
+  getCredentials(): Promise<UserCredentials>{
+    return this.localStorage.getItem<{userId:string, token:string}>('user')
+                            .take(1)
+                            .toPromise()
+                            .catch(error=> console.log(error));
   }
 
 }

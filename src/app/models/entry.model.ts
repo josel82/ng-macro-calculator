@@ -12,12 +12,13 @@ export class Entry {
               private goalMult: number,
               private isImperial: boolean,
               private createdAt:string,
-              private updatedAt:string
+              private updatedAt:string,
+              private __v:number
             ){}
 
 // ================================ SETTERS ===================================
   set_id(id:string){
-    this._id = id;
+    this._id = id
   }
   set_userId(userId:string){
     this._userId = userId;
@@ -52,7 +53,10 @@ export class Entry {
   setUpdatedAt(updatedAt: string){
     this.updatedAt = updatedAt;
   }
-  
+  set__v(__v:number){
+    this.__v = __v;
+  }
+
 // ================================ GETTERS ===================================
   get_id():string{
     return this._id;
@@ -89,5 +93,8 @@ export class Entry {
   }
   getUpdatedAt():string{
     return this.updatedAt;
+  }
+  get__v():number{
+    return this.__v;
   }
 }

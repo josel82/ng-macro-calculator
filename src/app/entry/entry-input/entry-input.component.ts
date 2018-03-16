@@ -8,7 +8,6 @@ import { ControlService } from '../../services/control.service';
 
 import { Entry } from '../../models/entry.model';
 
-
 @Component({
   selector: 'app-entry-input',
   templateUrl: './entry-input.component.html',
@@ -17,6 +16,7 @@ import { Entry } from '../../models/entry.model';
 export class EntryInputComponent implements OnInit {
 
   @Output() formEmitter = new EventEmitter<any>();
+  @Output() entryTitle = new EventEmitter<string>();
   private inputForm: FormGroup;
 
   constructor(private stgService: StorageService,
@@ -38,9 +38,9 @@ export class EntryInputComponent implements OnInit {
       this.formEmitter.emit(null);
       return
     }
-
     this.inputForm = this.initialiseForm(this.prepareForImporting(entry));
     this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
+    this.entryTitle.emit(entry.getTitle());
   }
 
   initialiseForm(entry): FormGroup{
@@ -63,7 +63,7 @@ export class EntryInputComponent implements OnInit {
     //Need to clear the form
   }
 
-  prepareForImporting(values: Entry): Entry{
+  prepareForImporting(values){
     if(values.getIsImperial()){
       values.setWeight(this.unitConverter.kiloToPound(values.getWeight()));
       values.setHeight(this.unitConverter.cmToInch(values.getHeight()));
@@ -78,4 +78,5 @@ export class EntryInputComponent implements OnInit {
     values.gender = +values.gender; //Casts to number
     return values
   }
+
 }
