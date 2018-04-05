@@ -1,15 +1,14 @@
 <div class="row">
-  <h2>Dasboard</h2>
-  <a class="col-md-3" [routerLink]="['/calculator']">
-    <div class="panel panel-default">
+  <h2 id="headline">Dashboard</h2>
+  <a class="col-md-3 col-sm-6" [routerLink]="['/calculator']">
+    <div class="panel panel-default" id="plus-box">
       <div class="panel-body">
-        <h2>+</h2>
       </div>
     </div>
   </a>
   <app-dashboard-item *ngFor="let entry of entryList; let i = index">
-    <a class="col-md-3">
-      <div class="panel panel-default">
+    <a class="col-md-3 col-sm-6">
+      <div class="panel panel-default panel-entries">
         <div class="panel-heading">
           <h3 class="panel-title" style="display:inline-block">{{ entry.title }}</h3>
           <div style="display:inline" class="dropdown no-select" appDropdown>
@@ -24,7 +23,8 @@
         </div>
         <a [routerLink]="['/calculator', i]">
           <div class="panel-body">
-            <p>{{ entry.createdAt }}</p>
+            <p>Created at: {{ entry.createdAt | date:'yyyy-MM-dd' }}</p>
+            <p>Last Modified: {{ entry.updatedAt | date:'yyyy-MM-dd' }}</p>
           </div>
         </a>
       </div>

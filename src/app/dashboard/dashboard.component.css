@@ -12,3 +12,19 @@ a{
     -ms-user-select: none;
     user-select: none;
 }
+
+#plus-box{
+  min-height: 132px;
+  max-width: 255px;
+  background-image: url('../../assets/img/plus.png');
+  background-size: 35%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+}
+#headline{
+  padding-bottom: 50px;
+}
+.panel-entries{
+  max-width: 255px;
+}
