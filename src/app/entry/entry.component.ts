@@ -36,7 +36,7 @@ export class EntryComponent implements OnInit{
               private router: Router,
               private dataService: DataService,
               private controlService: ControlService,
-              private spinnerService: Ng4LoadingSpinnerService,) { }
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit(){
   }

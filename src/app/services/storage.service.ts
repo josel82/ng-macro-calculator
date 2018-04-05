@@ -13,21 +13,25 @@ export class StorageService {
 
   push(data:Entry){
     this.entries.push(data);
-    this.entryEvent.emit(this.entries);
+    this.update();
   }
   edit(index:number, data ):void{
     this.entries[index] = data;
-    this.entryEvent.emit(this.entries);
+    this.update();
   }
   delete(index:number):void{
     this.entries.splice(index, 1);
-    this.entryEvent.emit(this.entries);
+    this.update();
   }
   getItems():Entry[]{
     return this.entries;
   }
   getItem(index):Entry{
     return this.entries[index];
+  }
+
+  update(){
+    this.entryEvent.emit(this.entries);
   }
 
 

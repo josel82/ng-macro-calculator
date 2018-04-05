@@ -19,7 +19,6 @@ export class DataService {
 
   async getEntries():Promise<any>{ //Retrieves Entries from the backend
     const credentials = await this.auth.getCredentials();
-    console.log(credentials);
     const header = {key:'x-auth', value: credentials.token};
     return this.backend.getRequest('/entries', header).take(1).toPromise();
   }
@@ -48,8 +47,12 @@ export class DataService {
                             .toPromise();
   }
 
-  populateArray(entries):void{
+  populateArray(entries:Array<any>):void{
     this.storage.entries = [];
+    if(entries.length<=0){
+      this.storage.update();
+      return;  
+    }
     for(let entry of entries){
       this.storage.push(this.generateEntry(entry));
     }
