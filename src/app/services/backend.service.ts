@@ -5,8 +5,13 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class BackendService {
 
+<<<<<<< HEAD
   private endPoint: string = "http://localhost:3000";
   //private endPoint: string = "https://young-spire-16181.herokuapp.com";
+=======
+  // private endPoint: string = "http://localhost:3000";
+  private endPoint: string = "https://young-spire-16181.herokuapp.com";
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 
   constructor(private http: HttpClient) { }
 

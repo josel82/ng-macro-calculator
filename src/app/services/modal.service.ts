@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { SimpleModalService } from "ngx-simple-modal";
 import { PromptModalComponent } from '../modals/prompt-modal/prompt-modal.component';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+<<<<<<< HEAD
 import { MsgModalComponent } from '../modals/msg-modal/msg-modal.component';
+=======
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 
 @Injectable()
 export class ModalService {
@@ -26,6 +29,7 @@ export class ModalService {
             },60000);
   }
 
+<<<<<<< HEAD
   showMsgModal(data, callback) {
     let disposable = this.simpleModalService
                             .addModal(MsgModalComponent, data)
@@ -42,6 +46,8 @@ export class ModalService {
             },60000);
   }
 
+=======
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
   showConfirmModal(data:{modalTitle:string, modalMsg:string}, callback){
 
     let disposable = this.simpleModalService

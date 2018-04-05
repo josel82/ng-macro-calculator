@@ -6,7 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
+<<<<<<< HEAD
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+=======
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 //************************  Components  ***************************
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,7 +37,10 @@ import { HintDropdownDirective } from './directives/hint-dropdown.directive';
 import { DinamicHeightDirective } from './directives/dinamic-height.directive';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+<<<<<<< HEAD
 import { MsgModalComponent } from './modals/msg-modal/msg-modal.component';
+=======
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 
 //************************  Routes  ***************************
 const appRoutes: Routes = [
@@ -62,8 +68,12 @@ const appRoutes: Routes = [
     EntryInputComponent,
     EntryOutputComponent,
     LoginComponent,
+<<<<<<< HEAD
     SignupComponent,
     MsgModalComponent
+=======
+    SignupComponent
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
   ],
   imports: [
     BrowserModule,
@@ -71,6 +81,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     SimpleModalModule,
     HttpClientModule,
+<<<<<<< HEAD
     AsyncLocalStorageModule,
     Ng4LoadingSpinnerModule
   ],
@@ -78,6 +89,13 @@ const appRoutes: Routes = [
     PromptModalComponent,
     ConfirmModalComponent,
     MsgModalComponent
+=======
+    AsyncLocalStorageModule
+  ],
+  entryComponents:[
+    PromptModalComponent,
+    ConfirmModalComponent
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
   ],
   providers: [
     StorageService,

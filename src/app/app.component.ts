@@ -22,11 +22,20 @@ export class AppComponent implements OnInit{
               private router: Router){}
 
   ngOnInit(){
+<<<<<<< HEAD
     this.dataService.getEntries().then((resp)=>{
       this.dataService.populateArray(resp.entries);
     }).catch((error) => {
       console.log('Not Authenticated.',error);
     });
+=======
+    this.dataService.downloadEntries();
+  //   this.dataService.getEntries().then((resp)=>{
+  //     this.dataService.populateArray(resp.entries);
+  //   }).catch((error) => {
+  //     console.log('Not Authenticated.',error);
+  //   });
+>>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
   }
 
   @HostListener('document:click', ['$event']) clickOut(event){
