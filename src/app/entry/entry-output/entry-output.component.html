@@ -1,0 +1,106 @@
+<div class="row" appDinamicHeight>
+  <div class="col-xs-12 text-right">
+    <span class="help-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</span>
+    <div class="calories-result" *ngIf="dailyCal">
+      <div class="dropdown" appHintDropdown>
+        <h3>
+          <span class="glyphicon glyphicon-question-sign"></span>
+          Daily Calories
+        </h3>
+        <!-- dropdown-menu ===========================================-->
+        <div class="dropdown-menu hint" aria-labelledby="result-hint">
+          <h5>Daily Calorie Goal</h5>
+          <p>This is the daily maximun amount of calories you should consume in order to hit your fitness goal.</p>
+        </div><!-- dropdown-menu end -->
+      </div>
+      <h2 id="dailyCal"><strong>{{ dailyCal }}</strong> kcal/day</h2>
+    </div>
+    <div class="macros-result" *ngIf="carbs && protein && fat">
+      <div class="dropdown" appHintDropdown>
+        <h4>
+          <span class="glyphicon glyphicon-question-sign"></span>
+          Macros Split
+        </h4>
+        <!-- dropdown-menu ===========================================-->
+        <div class="dropdown-menu hint" aria-labelledby="result-hint">
+          <h5>Macros Split</h5>
+          <p>This is your Daily Calorie Goal split into the three macro nutrients. These is the maximun amount of
+            <strong>Carbohydrates</strong>,
+            <strong>Protein</strong>  and
+            <strong>Fats</strong>,
+            in grams per day, you should consume in order to hit your fitness goal
+          </p>
+        </div><!-- dropdown-menu end -->
+      </div>
+      <p>Carbs</p>
+      <p><strong>{{ carbs }} g</strong></p>
+      <p>Protein</p>
+      <p><strong>{{ protein }} g</strong></p>
+      <p>Fats</p>
+      <p><strong>{{ fat }} g</strong></p>
+    </div>
+  </div>
+  </div>
+  <div class="row" appDinamicHeight>
+  <div class="col-sm-4 pull-right text-left">
+    <form [formGroup]="baseCalcForm">
+      <div class="form-group">
+        <div class="dropdown" appHintDropdown>
+          <label for="tdee"
+                 class="dropdown-toogle"
+                 id="tdee-hint"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="true"
+                 >
+                 <span class="glyphicon glyphicon-question-sign"></span>
+                 TDEE: (kcal/day)
+          </label>
+          <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
+            <h5>Total Daily Calorie Expenditure</h5>
+            <p>This is the amount of calories you burn per day, based on your level of activity</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" (click)="onRefreshTDEE()" [disabled]="baseCalcForm.invalid || baseCalcForm.get('tdee').value <= baseCalcForm.get('bmr').value || baseCalcForm.get('tdee').value <= 1000">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </span>
+          <input type="number" name="tdee" class="form-control" formControlName="tdee">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="dropdown" appHintDropdown>
+          <label for="bmr"
+                 class="dropdown-toogle"
+                 id="bmr-hint"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="true"
+                 >
+                 <span class="glyphicon glyphicon-question-sign"></span>
+                 BMR: (kcal/day)
+          </label>
+          <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
+            <h5>Basal Methabolic Rate</h5>
+            <p>This is the daily amount of calories your body needs for breathing and generating heat.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" (click)="onRefreshBMR()" [disabled]="baseCalcForm.invalid || baseCalcForm.get('bmr').value < 1000">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </span>
+          <input type="number" name="bmr" class="form-control" formControlName="bmr">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <ng-content></ng-content>
+  </div>
+</div>

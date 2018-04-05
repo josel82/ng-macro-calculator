@@ -1,0 +1,15 @@
+/*****************************  DropDowns  ************************************/
+.hint {
+  padding: 10px;
+}
+.hint>h5{
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.glyphicon-question-sign{
+  font-size: 16px;
+}
+
+#dailyCal{
+  color: #428bca;
+}

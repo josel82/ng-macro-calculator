@@ -1,0 +1,9 @@
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched
+{
+  border: 1px solid red;
+}
+span.help-block.alert-msg {
+  margin: 0 0 5px;
+  color:red;
+}
