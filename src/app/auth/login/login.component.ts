@@ -5,10 +5,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

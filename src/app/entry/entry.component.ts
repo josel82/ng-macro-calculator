@@ -7,10 +7,7 @@ import { ModalService } from '../services/modal.service';
 import { ControlService } from '../services/control.service';
 import { DataService } from '../services/data.service';
 import { AuthService } from '../auth/auth.service';
-<<<<<<< HEAD
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-=======
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 import { default as config} from './save-modal.config';
 
 import { Entry } from '../models/entry.model';
@@ -38,12 +35,8 @@ export class EntryComponent implements OnInit{
               private route: ActivatedRoute,
               private router: Router,
               private dataService: DataService,
-<<<<<<< HEAD
               private controlService: ControlService,
               private spinnerService: Ng4LoadingSpinnerService,) { }
-=======
-              private controlService: ControlService) { }
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
 
   ngOnInit(){
   }
@@ -66,7 +59,6 @@ export class EntryComponent implements OnInit{
       this.modalService.showPromptModal(data, (response)=>{
         newEntry.title = response;
         let id = this.stgService.getItem(this.route.snapshot.params['index']).get_id();
-<<<<<<< HEAD
         this.spinnerService.show();
         this.dataService.editEntry(id ,newEntry, credentials.token)
                           .then(()=>{
@@ -78,12 +70,6 @@ export class EntryComponent implements OnInit{
                               console.log('Not Authenticated.', error);
                               this.router.navigate(['/']);
                             });
-=======
-        this.dataService.editEntry(id ,newEntry, credentials.token)
-                          .then(()=>{
-                            this.dataService.downloadEntries();
-                            // this.isChanged = true;
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
                             this.router.navigate(['dashboard']);
                           });
       });
@@ -91,7 +77,6 @@ export class EntryComponent implements OnInit{
       let data = this.configureSaveModal('new', '');
       this.modalService.showPromptModal(data, (response)=>{
         newEntry.title = response;
-<<<<<<< HEAD
         this.spinnerService.show();
         this.dataService.saveEntry(newEntry, credentials.token)
                         .then(()=>{
@@ -110,14 +95,6 @@ export class EntryComponent implements OnInit{
           this.modalService.showMsgModal(data,()=>{});
           console.log(error);
         });
-=======
-        this.dataService.saveEntry(newEntry, credentials.token)
-                        .then(()=>{
-                          this.dataService.downloadEntries();
-                          // this.isChanged = false;
-                          this.router.navigate(['dashboard']);
-        },error=>console.log(error));
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
       });
     }
   }
@@ -129,7 +106,6 @@ export class EntryComponent implements OnInit{
     }
     this.modalService.showConfirmModal(modalData, (result)=>{
       let id = this.stgService.getItem(this.route.snapshot.params['index']).get_id();
-<<<<<<< HEAD
       this.spinnerService.show();
       this.dataService.deleteEntry(id, credentials.token).then(()=>{
         this.dataService.downloadEntries().then((resp)=>{
@@ -147,12 +123,6 @@ export class EntryComponent implements OnInit{
         this.modalService.showMsgModal(data,()=>{});
         console.log(error)
       });
-=======
-      this.dataService.deleteEntry(id, credentials.token).then(()=>{
-        this.dataService.downloadEntries();
-        this.router.navigate(['/dashboard']);
-      }).catch(error => console.log(error));
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
     });
   }
 

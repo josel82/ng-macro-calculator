@@ -55,7 +55,6 @@ export class DataService {
     }
   }
 
-<<<<<<< HEAD
   downloadEntries():Promise<any>{
     return new Promise((resolve, reject)=>{
       this.getEntries().then((resp)=>{
@@ -64,15 +63,6 @@ export class DataService {
         reject(error);
       });
     });
-
-=======
-  downloadEntries(){
-    this.getEntries().then((resp)=>{
-      this.populateArray(resp.entries);
-    }).catch((error) => {
-      console.log('Not Authenticated.',error);
-    });
->>>>>>> 425c7abae2775646c8562beb52de8e41b56001c1
   }
 
   generateEntry(body: ResponseBody):Entry{
