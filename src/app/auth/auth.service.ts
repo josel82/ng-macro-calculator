@@ -9,6 +9,7 @@ import { UserCredentials } from './user-credentials.interface';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ModalService } from '../services/modal.service';
 import { default as config} from './modal.config';
+import { DataService } from '../services/data.service';
 
 interface AuthResponse{
   _id: string;
@@ -22,30 +23,34 @@ export class AuthService {
               private localStorage: AsyncLocalStorage,
               private router: Router,
               private spinnerService: Ng4LoadingSpinnerService,
-              private modalService: ModalService){}
+              private modalService: ModalService,
+              private dataService: DataService){}
 
 // =============================================================================
 // =============================  LOG IN =======================================
 // =============================================================================
   loginUser(input: {email:string, password: string}){
-    const path = '/users/login';
+    const loginRoute = `${this.backend.getUrl()}/users/login`;
+    const getEntRoute = `${this.backend.getUrl()}/entries`;
     this.spinnerService.show();
-    this.backend.postRequest(path, input, null).subscribe((response : HttpResponse<AuthResponse>)=>{
-      let user = {
+    this.backend.loginUser(loginRoute, input).subscribe((response : HttpResponse<AuthResponse>)=>{
+      const user ={
         userId: response.body._id,
-        token: response.headers.get('x-auth')
-      }
-      this.localStorage.setItem('user', user).subscribe(()=>{
+        token: response.headers.getAll('x-auth')
+      };
+      this.localStorage.setItem('user', user).subscribe(()=>{});
+      this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
+        this.spinnerService.hide();
         this.router.navigate(['/dashboard']);
-      });
-      this.spinnerService.hide();
+      }).catch((error)=>console.log(error));
+      
     },(error)=>{
       console.log(error);
       this.spinnerService.hide();
       let key = this.errorHandler(error);
       let modalData = this.configureModal(key);
       this.modalService.showMsgModal(modalData, ()=>{});
-    });
+  });
   }
 
   // =============================================================================
@@ -53,39 +58,39 @@ export class AuthService {
   // =============================================================================
 
   async logoutUser(){
-    const path = '/users/me/token';
-    const resType = 'text';
+    const route = `${this.backend.getUrl()}/users/me/token`;
     const credentials = await this.getCredentials();
-    let header = { key: 'x-auth', value: credentials.token }
+    if(!credentials) return this.router.navigate(['/']);
     this.spinnerService.show();
-    this.backend.deleteRequest(path, header, resType).subscribe((response: HttpResponse<any>)=>{
-      this.spinnerService.hide();
-      this.localStorage.clear().subscribe(()=>{
+    this.backend.logoutUser(route, credentials.token, 'text').subscribe((response)=>{
+        this.spinnerService.hide();
+        this.localStorage.clear().subscribe(()=>{});
         this.router.navigate(['/']);
+      },(error)=>{
+        console.log(error);
+        this.spinnerService.hide();
+        let key = this.errorHandler(error);
+        this.modalService.showMsgModal(this.configureModal(key),()=>{});
       });
-    },(error)=>{
-      console.log(error);
-      this.spinnerService.hide();
-      let key = this.errorHandler(error);
-      this.modalService.showMsgModal(this.configureModal(key),()=>{});
-    });
   }
 
   // =============================================================================
   // =============================  SIGN UP ======================================
   // =============================================================================
   signupUser(input: {email:string, password: string}){
-    const path = '/users';
-    this.spinnerService.show();
-    this.backend.postRequest(path, input, null).subscribe((response: HttpResponse<AuthResponse>)=>{
+      const route = `${this.backend.getUrl()}/users`;
+      const getEntRoute = `${this.backend.getUrl()}/entries`;
+      this.spinnerService.show();
+      this.backend.signUpUser(route, input).subscribe((response: HttpResponse<AuthResponse>)=>{
       let user = {
         userId: response.body._id,
         token: response.headers.get('x-auth')
-      }
-
-      this.spinnerService.hide();
+      };
       this.localStorage.setItem('user', user).subscribe(()=>{});
-      this.router.navigate(['/dashboard']);
+      this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
+        this.spinnerService.hide();
+        this.router.navigate(['/dashboard']);
+      }).catch((error)=>console.log(error));
     },(error)=>{
       console.log(error);
       this.spinnerService.hide();
@@ -94,11 +99,10 @@ export class AuthService {
     });
   }
 
-  getCredentials(): Promise<UserCredentials>{
+  getCredentials(): Promise<any>{
     return this.localStorage.getItem<{userId:string, token:string}>('user')
                             .take(1)
-                            .toPromise()
-                            .catch(error=> console.log(error));
+                            .toPromise();
   }
 
   configureModal(key:string): {modalTitle:string, modalMsg:string} {

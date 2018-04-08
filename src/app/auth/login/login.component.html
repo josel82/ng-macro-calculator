@@ -1,13 +1,22 @@
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
+    <h1>Log in</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div class="form-group">
         <label for="email">Email:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">
+              Invalid email!
+        </span>
         <input type="email" class="form-control" name="email" formControlName="email">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
+        <span class="help-block alert-msg pull-right"
+              *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+              Must provide a valid password!
+        </span>
         <input type="password" class="form-control" name="password" formControlName="password">
       </div>
       <div class="btn-group" role="group">

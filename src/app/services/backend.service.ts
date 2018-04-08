@@ -5,50 +5,70 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class BackendService {
 
-  //private endPoint: string = "http://localhost:3000";
-  private endPoint: string = "https://young-spire-16181.herokuapp.com";
+  private isProd: boolean = true;
+  private apiUrl: string = this.isProd ? "https://young-spire-16181.herokuapp.com": "http://localhost:3000";
 
   constructor(private http: HttpClient) { }
 
-
-  postRequest(path, input, token:{key:string, value:string}|null):Observable<HttpResponse<any>> {
-    const url = `${this.endPoint}${path}`;
-    let headers = this.setHeader('Content-Type', 'application/json');
-    if(token){
-      headers = headers.append(token.key,token.value);
-    }
-    return this.http.post(url, input, {headers: headers, observe: 'response'});
+  getUrl():string{
+    return this.apiUrl;
   }
 
-  patchRequest(path, input, token:{key:string, value:string}|null):Observable<any> {
-    const url = `${this.endPoint}${path}`;
-    let headers = this.setHeader('Content-Type', 'application/json');
-    if(token){
-      headers = headers.append(token.key,token.value);
-    }
-    return this.http.patch(url, input, {headers: headers, observe: 'response'});
+  
+  loginUser(url, user):Observable<HttpResponse<any>>{
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post(url, user, {headers: headers, observe: 'response'});
   }
 
-  deleteRequest(path, token:{key:string, value:string}|null, resType): Observable<any> {
-    const url = `${this.endPoint}${path}`;
-    let headers = this.setHeader('Content-Type', 'application/json');
-    if(token){
-       headers = headers.append(token.key, token.value);
-    }
+  signUpUser(url, user):Observable<HttpResponse<any>>{
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post(url, user, {headers: headers, observe: 'response'});
+  }
+
+  logoutUser(url, token, resType):Observable<any>{
+    const headers = new HttpHeaders().set('x-auth',token);
     return this.http.delete(url, {headers: headers, observe: 'response', responseType:resType});
   }
 
-  getRequest(path,token:{key:string, value:string}|null): Observable<any>{
-    const url = `${this.endPoint}${path}`;
-    let headers = this.setHeader('Content-Type', 'application/json');
+  isAuthenticated(url, token:string): Observable<any>{
+    const headers = new HttpHeaders().set('x-auth',token);
+    return this.http.get(url, {headers:headers});
+  }
+
+  saveEntry(url, entry, token:string):Observable<HttpResponse<any>>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
     if(token){
-       headers = headers.append(token.key, token.value);
+      headers = headers.append('x-auth',token);
+    }
+    return this.http.post(url, entry, {headers: headers, observe: 'response'});
+  }
+
+  editEntry(url, entry, token:string):Observable<HttpResponse<any>>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    if(token){
+      headers = headers.append('x-auth',token);
+    }
+    return this.http.patch(url, entry, {headers: headers, observe: 'response'});
+  }
+
+  deleteEntry(url, token:string, resType):Observable<HttpResponse<any>>{
+    const headers = new HttpHeaders().set('x-auth',token);
+    return this.http.delete(url, {headers: headers, observe: 'response', responseType:resType});
+  }
+
+  getEntries(url, token):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    if(token){
+       headers = headers.append('x-auth', token);
     }
     return this.http.get(url, {headers:headers});
   }
 
-  setHeader(key: string, value:string){
-    return new HttpHeaders().set(key,value);
-  }
+
 
 }
+
+
+
+ 
+

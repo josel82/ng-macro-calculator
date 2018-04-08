@@ -35,15 +35,16 @@ import { DinamicHeightDirective } from './directives/dinamic-height.directive';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MsgModalComponent } from './modals/msg-modal/msg-modal.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 //************************  Routes  ***************************
 const appRoutes: Routes = [
   {path: '', component: LandingComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'dashboard', component: DashboardComponent},
+  {path: 'dashboard', canActivate: [AuthGuard] , component: DashboardComponent},
   {path: 'calculator', component: EntryComponent},
-  {path: 'calculator/:index', component: EntryComponent}
+  {path: 'calculator/:index',  canActivate: [AuthGuard] , component: EntryComponent}
 ]
 
 @NgModule({
@@ -89,7 +90,8 @@ const appRoutes: Routes = [
     ControlService,
     BackendService,
     AuthService,
-    DataService
+    DataService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

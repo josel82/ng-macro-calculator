@@ -14,38 +14,7 @@ import { Entry } from '../models/entry.model';
 export class DataService {
 
   constructor(private backend: BackendService,
-              private auth: AuthService,
               private storage: StorageService) { }
-
-  async getEntries():Promise<any>{ //Retrieves Entries from the backend
-    const credentials = await this.auth.getCredentials();
-    const header = {key:'x-auth', value: credentials.token};
-    return this.backend.getRequest('/entries', header).take(1).toPromise();
-  }
-
-  saveEntry(entry, token: string):Promise<any>{
-    const header = {key:'x-auth', value: token};
-    return new Promise((resolve, reject)=>{
-      this.backend.postRequest('/entries', entry, header)
-                      .subscribe((resp:HttpResponse<any>)=>{
-                          resolve(resp.body);
-                      },error => reject(error));
-    });
-  }
-
-  deleteEntry(id:string, token:string):Promise<any>{
-    const header = {key:'x-auth', value: token};
-    return this.backend.deleteRequest(`/entries/${id}`, header, 'application/json')
-                          .take(1)
-                            .toPromise();
-  }
-
-  editEntry(id:string, entry, token:string):Promise<any>{
-    const header = {key:'x-auth', value: token};
-    return this.backend.patchRequest(`/entries/${id}`, entry, header)
-                          .take(1)
-                            .toPromise();
-  }
 
   populateArray(entries:Array<any>):void{
     this.storage.entries = [];
@@ -58,14 +27,15 @@ export class DataService {
     }
   }
 
-  downloadEntries():Promise<any>{
+  downloadEntries(route, token): Promise<any>{
     return new Promise((resolve, reject)=>{
-      this.getEntries().then((resp)=>{
-        resolve(resp);
-      }).catch((error) => {
-        reject(error);
-      });
+      this.backend.getEntries(route, token)
+                    .subscribe((resp)=>{
+                       this.populateArray(resp.entries);
+                       resolve();
+                    },error => reject(error));
     });
+    
   }
 
   generateEntry(body: ResponseBody):Entry{
