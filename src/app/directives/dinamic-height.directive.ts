@@ -10,8 +10,6 @@ export class DinamicHeightDirective implements OnInit{
 
   ngOnInit(){
     this.elementHeight = (this.element.nativeElement.parentElement.parentElement.parentElement.clientHeight)/2+'px';
-    console.log(this.element.nativeElement.parentElement.parentElement.parentElement);
-    
   }
 
 }

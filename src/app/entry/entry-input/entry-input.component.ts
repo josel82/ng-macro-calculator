@@ -13,9 +13,10 @@ import { Entry } from '../../models/entry.model';
   templateUrl: './entry-input.component.html',
   styleUrls: ['./entry-input.component.css']
 })
-export class EntryInputComponent implements OnInit {
+export class EntryInputComponent implements OnInit{
 
   @Output() formEmitter = new EventEmitter<any>();
+  @Output() statusEmitter = new EventEmitter<any>();
   @Output() entryTitle = new EventEmitter<string>();
   private inputForm: FormGroup;
 
@@ -35,10 +36,12 @@ export class EntryInputComponent implements OnInit {
     let entry = this.stgService.getItem(this.route.snapshot.params['index']);
     if(!entry){
       this.inputForm = this.initialiseForm(null);
+      this.suscribeToStatusChange(this.inputForm);
       this.formEmitter.emit(null);
       return
     }
     this.inputForm = this.initialiseForm(this.prepareForImporting(entry));
+    this.suscribeToStatusChange(this.inputForm);
     this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
     this.entryTitle.emit(entry.getTitle());
   }
@@ -52,6 +55,11 @@ export class EntryInputComponent implements OnInit {
       'activityMult': new FormControl(entry ? entry.activityMult : null, Validators.required),
       'goalMult': new FormControl(entry ? entry.goalMult : null, Validators.required),
       'isImperial': new FormControl(entry ? entry.isImperial : false)
+    });
+  }
+  suscribeToStatusChange(form:FormGroup){
+    form.statusChanges.subscribe((status:any)=>{
+      this.statusEmitter.emit(status); 
     });
   }
 

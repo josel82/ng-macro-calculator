@@ -26,6 +26,7 @@ export class EntryComponent implements OnInit{
   private entryTitle;
   private stored: boolean = false;
   private loggedIn:boolean = true;
+  private inputFormStatus;
   // private isChanged: boolean = false;
 
   constructor(private stgService: StorageService,
@@ -49,6 +50,10 @@ export class EntryComponent implements OnInit{
 
   setEntryTitle(title){ // Sets the title of the entry ==================================================>
     this.entryTitle = title;
+  }
+
+  setStatus(status){ // Listen to validation status of the InputForm ====================================>
+    this.inputFormStatus = status;    
   }
 
   // For both save and editing an entry =================================================================>

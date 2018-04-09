@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-6">
-    <app-entry-input (formEmitter)="onSubmit($event)" (entryTitle)="setEntryTitle($event)"></app-entry-input>
+    <app-entry-input (formEmitter)="onSubmit($event)" (entryTitle)="setEntryTitle($event)" (statusEmitter)="setStatus($event)"></app-entry-input>
   </div>
   <div class="col-md-6">
     <app-entry-output [inputFormValues]="formValues"></app-entry-output>
@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="btn-group" role="group">
-      <button type="button" name="calculate" class="btn btn-primary" (click)="onCalculate()">Calculate</button>
+      <button type="button" name="calculate" class="btn btn-primary" (click)="onCalculate()" [disabled]="inputFormStatus !== 'VALID'">Calculate</button>
       <button type="button" name="clear" class="btn btn-default" (click)="onClear()">Clear</button>
     </div>
   </div>
