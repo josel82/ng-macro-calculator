@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.stgService.entryEvent.subscribe((entries: Entry[])=>{
        this.entryList = entries;
+       console.log(this.entryList.length);
+       
     });
     this.entryList = this.stgService.entries;
   }

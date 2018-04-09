@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
@@ -36,16 +35,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MsgModalComponent } from './modals/msg-modal/msg-modal.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-//************************  Routes  ***************************
-const appRoutes: Routes = [
-  {path: '', component: LandingComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'dashboard', canActivate: [AuthGuard] , component: DashboardComponent},
-  {path: 'calculator', component: EntryComponent},
-  {path: 'calculator/:index',  canActivate: [AuthGuard] , component: EntryComponent}
-]
+
 
 @NgModule({
   declarations: [
@@ -65,16 +58,17 @@ const appRoutes: Routes = [
     LoginComponent,
     SignupComponent,
     MsgModalComponent,
-    SignupComponent
+    SignupComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes),
     SimpleModalModule,
     HttpClientModule,
     AsyncLocalStorageModule,
-    Ng4LoadingSpinnerModule
+    Ng4LoadingSpinnerModule,
+    AppRoutingModule
   ],
   entryComponents:[
     PromptModalComponent,
