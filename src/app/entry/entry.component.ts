@@ -27,6 +27,7 @@ export class EntryComponent implements OnInit{
   private stored: boolean = false;
   private loggedIn:boolean = true;
   private inputFormStatus;
+  private isNewEntry: boolean;
   // private isChanged: boolean = false;
 
   constructor(private stgService: StorageService,
@@ -42,6 +43,7 @@ export class EntryComponent implements OnInit{
   async ngOnInit(){
     const credentials = await this.auth.getCredentials();
     this.loggedIn = credentials ? true : false;
+    this.isNewEntry = this.setIsNewEntry(this.entryTitle);
   }
 
   onSubmit(values){ // Sets the values of the form ======================================================>
@@ -56,6 +58,10 @@ export class EntryComponent implements OnInit{
     this.inputFormStatus = status;    
   }
 
+  setIsNewEntry(title):boolean{ // Sets isNewEntry flag =================================================>
+    return title? false : true;
+  }
+
   // For both save and editing an entry =================================================================>
   async onSave(){ 
     const credentials = await this.auth.getCredentials(); //fetch user credentials from localStorage
@@ -66,7 +72,7 @@ export class EntryComponent implements OnInit{
     }
     let newEntry = this.generateReqBody(this.formValues); //generate the body for the request
 
-    if(this.entryTitle){ // if entryTitle is defined then it means that this is an existing entry
+    if(this.entryTitle){ // if entryTitle is defined then it means that this is an existing entry 
       this.editExistingEntry(newEntry, credentials);
     }else{               // otherwise this is a new entry
       this.saveNewEntry(newEntry, credentials);

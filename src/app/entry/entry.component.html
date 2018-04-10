@@ -16,7 +16,7 @@
   <div class="col-md-6">
     <div class="btn-group pull-right" role="group" *ngIf="loggedIn; else solo">
       <button class="btn btn-primary" type="button" (click)="onSave()" >Save</button>
-      <button class="btn btn-default" type="button" (click)="onDelete()">Delete</button>
+      <button class="btn btn-default" type="button" (click)="onDelete()" [disabled]="isNewEntry">Delete</button>
       <button class="btn btn-default" type="button" (click)="onBack()" >
         <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
     </div>
