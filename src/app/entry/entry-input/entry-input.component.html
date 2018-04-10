@@ -33,11 +33,11 @@
             </span>
             <span class="help-block info-msg pull-right"
                   *ngSwitchCase="'METRIC'">
-                  You are using metric units
+                  Your weight in kilograms
             </span>
             <span class="help-block info-msg pull-right"
                   *ngSwitchCase="'IMPERIAL'">
-                  You are using imperial units
+                  Your weight in pounds
             </span>
         </span>
         <input type="number" name="weight" class="form-control" formControlName="weight" min="5">
@@ -51,11 +51,11 @@
           </span>
           <span class="help-block info-msg pull-right"
                 *ngSwitchCase="'METRIC'">
-                You are using metric units
+                Your height in centimeters
           </span>
           <span class="help-block info-msg pull-right"
                 *ngSwitchCase="'IMPERIAL'">
-                You are using imperial units
+                Your weight in inches
           </span>
       </span>
         <input type="number" name="height" class="form-control" formControlName="height" min="60">
