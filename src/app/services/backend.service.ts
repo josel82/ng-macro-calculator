@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
+import { default as config } from './.backend.config';
+
 @Injectable()
 export class BackendService {
 
   private isProd: boolean = true;
-  private apiUrl: string = this.isProd ? "https://young-spire-16181.herokuapp.com": "http://localhost:3000";
+  private apiUrl: string = this.isProd ? config['prod']: config['local'];
 
   constructor(private http: HttpClient) { }
 
