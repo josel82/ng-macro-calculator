@@ -12,3 +12,16 @@
 #dailyCal{
   color: #428bca;
 }
+.info-block{
+  font-size: 1.4em;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/**************Desktop****************/
+@media (min-width: 992px) { 
+  .info-block{
+    text-align: right;
+  }
+}
+

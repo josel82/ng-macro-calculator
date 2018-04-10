@@ -37,8 +37,7 @@ export class EntryInputComponent implements OnInit{
     if(!entry){
       this.inputForm = this.initialiseForm(null);
       this.suscribeToStatusChange(this.inputForm);
-      this.formEmitter.emit(null);
-      return
+      return;
     }
     this.inputForm = this.initialiseForm(this.prepareForImporting(entry));
     this.suscribeToStatusChange(this.inputForm);
