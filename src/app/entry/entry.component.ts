@@ -24,10 +24,10 @@ export class EntryComponent implements OnInit{
 
   private formValues;
   private entryTitle;
-  private stored: boolean = false;
+  private stored:boolean = false;
   private loggedIn:boolean = true;
-  private inputFormStatus;
-  private isNewEntry: boolean;
+  private formValid:boolean;
+  private isNewEntry:boolean;
   // private isChanged: boolean = false;
 
   constructor(private stgService: StorageService,
@@ -55,7 +55,7 @@ export class EntryComponent implements OnInit{
   }
 
   setStatus(status){ // Listen to validation status of the InputForm ====================================>
-    this.inputFormStatus = status;    
+    this.formValid = status === 'VALID'? true: false;    
   }
 
   setIsNewEntry(title):boolean{ // Sets isNewEntry flag =================================================>
