@@ -60,16 +60,14 @@ export class EntryOutputComponent implements OnInit {
   }
 
 // Is this actually practical? TDEE and BMR are not saved anyways
-  onRefreshTDEE():void{
-   // grab value from the form
-   // Calculate
-   // render results
+  validateTDEE():boolean{
+   return this.baseCalcForm.invalid || 
+          this.baseCalcForm.get('tdee').value <= this.baseCalcForm.get('bmr').value || 
+          this.baseCalcForm.get('tdee').value <= 1000;
   }
 
-  onRefreshBMR():void{
-    // grab value from the form
-    // Calculate
-    // render results
+ validateBMR():boolean{
+    return this.baseCalcForm.invalid || this.baseCalcForm.get('bmr').value < 1000;
   }
 
 }
