@@ -86,4 +86,29 @@ export class EntryInputComponent implements OnInit{
     return values
   }
 
+  validateWeightControl(form:FormControl):string{
+
+    if(!form.get('weight').valid && form.get('weight').touched){
+      return 'INVALID'
+    }else if(form.get('weight').valid && form.get('weight').touched && form.get('isImperial').value === false){
+      return 'METRIC'
+    }else if(form.get('weight').valid && form.get('weight').touched && form.get('isImperial').value === true){
+      return 'IMPERIAL'
+    }else{
+      return null;
+    }
+  }
+
+  validateHeightControl(form:FormControl):string{
+    if(!form.get('height').valid && form.get('height').touched){
+      return 'INVALID'
+    }else if(form.get('height').valid && form.get('height').touched && form.get('isImperial').value === false){
+      return 'METRIC'
+    }else if(form.get('height').valid && form.get('height').touched && form.get('isImperial').value === true){
+      return 'IMPERIAL'
+    }else{
+      return null;
+    }
+  }
+
 }

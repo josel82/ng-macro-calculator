@@ -26,18 +26,38 @@
     <div class="col-md-8">
       <div class="form-group">
         <label for="weight">Weight</label>
-        <span class="help-block alert-msg pull-right"
-              *ngIf="!inputForm.get('weight').valid && inputForm.get('weight').touched">
-              Invalid input!
+        <span [ngSwitch]="validateWeightControl(inputForm)">
+            <span class="help-block alert-msg pull-right"
+                  *ngSwitchCase="'INVALID'">
+                   Invalid input!
+            </span>
+            <span class="help-block info-msg pull-right"
+                  *ngSwitchCase="'METRIC'">
+                  You are using metric units
+            </span>
+            <span class="help-block info-msg pull-right"
+                  *ngSwitchCase="'IMPERIAL'">
+                  You are using imperial units
+            </span>
         </span>
         <input type="number" name="weight" class="form-control" formControlName="weight" min="5">
       </div>
       <div class="form-group">
         <label for="height">Height</label>
-        <span class="help-block alert-msg pull-right"
-              *ngIf="!inputForm.get('height').valid && inputForm.get('height').touched">
-              Invalid input!
-        </span>
+        <span [ngSwitch]="validateHeightControl(inputForm)">
+          <span class="help-block alert-msg pull-right"
+                *ngSwitchCase="'INVALID'">
+                 Invalid input!
+          </span>
+          <span class="help-block info-msg pull-right"
+                *ngSwitchCase="'METRIC'">
+                You are using metric units
+          </span>
+          <span class="help-block info-msg pull-right"
+                *ngSwitchCase="'IMPERIAL'">
+                You are using imperial units
+          </span>
+      </span>
         <input type="number" name="height" class="form-control" formControlName="height" min="60">
       </div>
       <div class="form-group">
