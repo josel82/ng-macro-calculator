@@ -24,8 +24,8 @@ export class EntryComponent implements OnInit{
 
   private formValues;
   private entryTitle;
-  private stored:boolean = false;
-  private loggedIn:boolean = true;
+  private stored:boolean;
+  private loggedIn:boolean;
   private formValid:boolean;
   private isNewEntry:boolean;
   // private isChanged: boolean = false;

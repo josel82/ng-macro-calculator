@@ -7,9 +7,9 @@
       <li class="dropdown" appDropdown>
         <a class="dropdown-toggle" data-toggle="dropdown" style="margin-right:20px"><span class="glyphicon glyphicon-user pull-right"></span></a>
         <ul class="dropdown-menu">
-          <li><a [routerLink]="'/signup'">Sign up</a></li>
-          <li><a [routerLink]="'/login'">Log in</a></li>
-          <li><a (click)="onLogout()">Log out</a></li>
+          <li><a [routerLink]="'/signup'" *ngIf="!loggedIn">Sign up</a></li>
+          <li><a [routerLink]="'/login'" *ngIf="!loggedIn">Log in</a></li>
+          <li><a (click)="onLogout()"*ngIf="loggedIn">Log out</a></li>
         </ul>
       </li>
     </ul>

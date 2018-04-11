@@ -59,7 +59,7 @@ export class EntryOutputComponent implements OnInit {
     this.carbs = null;
   }
 
-// Is this actually practical? TDEE and BMR are not saved anyways
+// These methods is for making sure only values that would make sence are allowed in the calculator
   validateTDEE():boolean{
    return this.baseCalcForm.invalid || 
           this.baseCalcForm.get('tdee').value <= this.baseCalcForm.get('bmr').value || 

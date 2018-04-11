@@ -10,6 +10,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ModalService } from '../services/modal.service';
 import { default as config} from './modal.config';
 import { DataService } from '../services/data.service';
+import { ListenerService } from '../services/listener.service';
 
 interface AuthResponse{
   _id: string;
@@ -24,7 +25,8 @@ export class AuthService {
               private router: Router,
               private spinnerService: Ng4LoadingSpinnerService,
               private modalService: ModalService,
-              private dataService: DataService){}
+              private dataService: DataService,
+              private listener: ListenerService){}
 
 // =============================================================================
 // =============================  LOG IN =======================================
@@ -40,6 +42,7 @@ export class AuthService {
       };
       this.localStorage.setItem('user', user).subscribe(()=>{});
       this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
+        this.listener.isLoggedIn.next(true);
         this.spinnerService.hide();
         this.router.navigate(['/dashboard']);
       }).catch((error)=>console.log(error));
@@ -63,6 +66,7 @@ export class AuthService {
     if(!credentials) return this.router.navigate(['/']);
     this.spinnerService.show();
     this.backend.logoutUser(route, credentials.token, 'text').subscribe((response)=>{
+      this.listener.isLoggedIn.next(false);
         this.spinnerService.hide();
         this.localStorage.clear().subscribe(()=>{});
         this.router.navigate(['/']);
@@ -88,6 +92,7 @@ export class AuthService {
       };
       this.localStorage.setItem('user', user).subscribe(()=>{});
       this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
+        this.listener.isLoggedIn.next(true);
         this.spinnerService.hide();
         this.router.navigate(['/dashboard']);
       }).catch((error)=>console.log(error));

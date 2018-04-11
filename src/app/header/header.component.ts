@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthService } from '../auth/auth.service';
+import { ListenerService } from '../services/listener.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,16 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  private loggedIn: boolean;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private listener: ListenerService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const credentials = await this.auth.getCredentials();
+    this.loggedIn = credentials ? true : false;
+    this.listener.isLoggedIn.subscribe((resp)=>{
+      this.loggedIn = resp;
+    });
   }
 
   onLogout(){
