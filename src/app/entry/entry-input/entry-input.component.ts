@@ -66,7 +66,6 @@ export class EntryInputComponent implements OnInit{
   }
 
   onSubmit():void{
-    // this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
     this.listenerService.inputFormSubmited.next(this.prepareForExporting(this.inputForm.value));
   }
   onClear():void{

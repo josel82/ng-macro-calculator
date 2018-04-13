@@ -4,3 +4,6 @@
 .dropdown-toggle{
     padding: 10px 15px 20px;
 }
+#logout{
+    cursor: pointer;
+}
