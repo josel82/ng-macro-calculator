@@ -7,6 +7,7 @@ import { UnitConverterService } from '../../services/unit-converter.service';
 import { ControlService } from '../../services/control.service';
 
 import { Entry } from '../../models/entry.model';
+import { ListenerService } from '../../services/listener.service';
 
 @Component({
   selector: 'app-entry-input',
@@ -15,7 +16,7 @@ import { Entry } from '../../models/entry.model';
 })
 export class EntryInputComponent implements OnInit{
 
-  @Output() formEmitter = new EventEmitter<any>();
+  // @Output() formEmitter = new EventEmitter<any>();
   @Output() statusEmitter = new EventEmitter<any>();
   @Output() entryTitle = new EventEmitter<string>();
   private inputForm: FormGroup;
@@ -23,7 +24,8 @@ export class EntryInputComponent implements OnInit{
   constructor(private stgService: StorageService,
               private route: ActivatedRoute,
               private unitConverter: UnitConverterService,
-              private controlService: ControlService) { }
+              private controlService: ControlService,
+              private listenerService: ListenerService){ }
 
 
   ngOnInit() {
@@ -41,7 +43,8 @@ export class EntryInputComponent implements OnInit{
     }
     this.inputForm = this.initialiseForm(this.prepareForImporting(entry));
     this.suscribeToStatusChange(this.inputForm);
-    this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
+    // this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
+    this.listenerService.inputFormSubmited.next(this.prepareForExporting(this.inputForm.value));
     this.entryTitle.emit(entry.getTitle());
   }
 
@@ -63,7 +66,8 @@ export class EntryInputComponent implements OnInit{
   }
 
   onSubmit():void{
-    this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
+    // this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
+    this.listenerService.inputFormSubmited.next(this.prepareForExporting(this.inputForm.value));
   }
   onClear():void{
     this.inputForm.reset();

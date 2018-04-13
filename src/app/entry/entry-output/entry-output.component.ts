@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CalculatorService } from '../../services/calculator.service';
 import { ControlService } from '../../services/control.service';
+import { ListenerService } from '../../services/listener.service';
 
 @Component({
   selector: 'app-entry-output',
@@ -11,12 +12,13 @@ import { ControlService } from '../../services/control.service';
 })
 export class EntryOutputComponent implements OnInit {
 
-  @Input() set inputFormValues(values){
-    if(!values) return;
-    let results = this.calculator.calculate(values);
-    this.renderResults(results);
-  };
+  // @Input() set inputFormValues(values){
+  //   if(!values) return;
+  //   let results = this.calculator.calculate(values);
+  //   this.renderResults(results);
+  // };
 
+  private inputFormValues;
   private carbs: number;
   private fat: number;
   private protein: number;
@@ -24,11 +26,18 @@ export class EntryOutputComponent implements OnInit {
   private baseCalcForm: FormGroup = this.initialiseForm();
 
   constructor(private calculator: CalculatorService,
-              private controlService: ControlService) { }
+              private controlService: ControlService,
+              private listenerService: ListenerService) { }
 
   ngOnInit() {
     this.controlService.clearForm.subscribe(()=>{
       this.clearResults();
+    });
+    this.listenerService.inputFormSubmited.subscribe((formValues)=>{
+      if(formValues){
+        let results = this.calculator.calculate(formValues);
+        this.renderResults(results);
+      }
     });
   }
 
