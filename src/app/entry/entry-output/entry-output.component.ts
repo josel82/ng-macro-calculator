@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CalculatorService } from '../../services/calculator.service';
 import { ControlService } from '../../services/control.service';
 import { ListenerService } from '../../services/listener.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-entry-output',
@@ -11,12 +12,6 @@ import { ListenerService } from '../../services/listener.service';
   styleUrls: ['./entry-output.component.css']
 })
 export class EntryOutputComponent implements OnInit {
-
-  // @Input() set inputFormValues(values){
-  //   if(!values) return;
-  //   let results = this.calculator.calculate(values);
-  //   this.renderResults(results);
-  // };
 
   private inputFormValues;
   private carbs: number;
@@ -27,17 +22,19 @@ export class EntryOutputComponent implements OnInit {
 
   constructor(private calculator: CalculatorService,
               private controlService: ControlService,
-              private listenerService: ListenerService) { }
+              private listenerService: ListenerService,
+              private dataService: DataService) { }
 
   ngOnInit() {
     this.controlService.clearForm.subscribe(()=>{
       this.clearResults();
     });
-    this.listenerService.inputFormSubmited.subscribe((formValues)=>{
-      if(formValues){
+    this.listenerService.inputFormSubmited.subscribe((inputForm)=>{
+      const formValues = this.dataService.formatFormValues(inputForm.value); 
+      if(inputForm.valid){
         let results = this.calculator.calculate(formValues);
         this.renderResults(results);
-        this.inputFormValues = formValues;
+        this.inputFormValues = inputForm;
       }
     });
   }

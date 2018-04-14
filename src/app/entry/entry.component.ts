@@ -29,7 +29,6 @@ export class EntryComponent implements OnInit{
   private loggedIn:boolean;
   private formValid:boolean;
   private isNewEntry:boolean;
-  // private isChanged: boolean = false;
 
   constructor(private stgService: StorageService,
               private modalService: ModalService,
@@ -46,10 +45,9 @@ export class EntryComponent implements OnInit{
     const credentials = await this.auth.getCredentials();
     this.loggedIn = credentials ? true : false;
     this.isNewEntry = this.setIsNewEntry(this.entryTitle);
-    this.listenerService.inputFormSubmited.subscribe((values)=>{
-      this.formValues = values;
+    this.listenerService.inputFormSubmited.subscribe((formControl: FormControl)=>{
+      this.formValues = this.dataService.formatFormValues(formControl.value);
     });
-
   }
 
   onSubmit(values){ // Sets the values of the form ======================================================>
@@ -61,7 +59,7 @@ export class EntryComponent implements OnInit{
   }
 
   setStatus(status){ // Listen to validation status of the InputForm ====================================>
-    this.formValid = status === 'VALID'? true: false;    
+    this.formValid = status === 'VALID'? true: false;
   }
 
   setIsNewEntry(title):boolean{ // Sets isNewEntry flag =================================================>

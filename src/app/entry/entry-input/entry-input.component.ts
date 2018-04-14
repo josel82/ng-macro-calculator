@@ -45,7 +45,7 @@ export class EntryInputComponent implements OnInit{
     this.inputForm = this.initialiseForm(this.prepareForImporting(entry));
     this.suscribeToStatusChange(this.inputForm);
     // this.formEmitter.emit(this.prepareForExporting(this.inputForm.value));
-    this.listenerService.inputFormSubmited.next(this.prepareForExporting(this.inputForm.value));
+    this.listenerService.inputFormSubmited.next(this.inputForm);
     this.entryTitle.emit(entry.getTitle());
   }
 
@@ -67,7 +67,7 @@ export class EntryInputComponent implements OnInit{
   }
 
   onSubmit():void{
-    this.listenerService.inputFormSubmited.next(this.prepareForExporting(this.inputForm.value));
+    this.listenerService.inputFormSubmited.next(this.inputForm);
   }
   onClear():void{
     this.inputForm.reset();
@@ -81,14 +81,7 @@ export class EntryInputComponent implements OnInit{
     }
     return values;
   }
-  prepareForExporting(values:{gender:number, age:number, weight:number, height:number, activityMult:number, goalMult:number, isImperial:boolean}){
-    if(values.isImperial){
-      values.weight = this.unitConverter.poundToKilo(values.weight);
-      values.height = this.unitConverter.inchToCm(values.height);
-    }
-    values.gender = +values.gender; //Casts to number
-    return values
-  }
+
 
   validateWeightControl(form:FormControl):string{
 

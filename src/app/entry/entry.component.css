@@ -13,9 +13,6 @@
   #small-devices{
     display: none;
   }
-  /* #medium-to-large, #small-devices{
-    margin-top: 0 !important;
-  } */
 }
 
 #medium-to-large{

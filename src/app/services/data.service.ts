@@ -9,12 +9,14 @@ import { AuthService } from '../auth/auth.service';
 import { StorageService } from './storage.service';
 import { ResponseBody } from '../shared/response-body.interface';
 import { Entry } from '../models/entry.model';
+import { UnitConverterService } from './unit-converter.service';
 
 @Injectable()
 export class DataService {
 
   constructor(private backend: BackendService,
-              private storage: StorageService) { }
+              private storage: StorageService,
+              private unitConverter: UnitConverterService) { }
 
   populateArray(entries:Array<any>):void{
     this.storage.entries = [];
@@ -53,5 +55,14 @@ export class DataService {
             body.createdAt,
             body.updatedAt,
             body.__v);
+  }
+
+  formatFormValues(values:{gender:number, age:number, weight:number, height:number, activityMult:number, goalMult:number, isImperial:boolean}){
+    if(values.isImperial){
+      values.weight = this.unitConverter.poundToKilo(values.weight);
+      values.height = this.unitConverter.inchToCm(values.height);
+    }
+    values.gender = +values.gender; //Casts to number
+    return values
   }
 }
