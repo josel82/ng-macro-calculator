@@ -7,3 +7,12 @@
 #logout{
     cursor: pointer;
 }
+
+.navbar-default .navbar-nav>.open>a{
+    background-color: transparent;
+}
+
+ul.dropdown-menu li{
+    text-align: right;
+    padding-right: 15px;
+}
