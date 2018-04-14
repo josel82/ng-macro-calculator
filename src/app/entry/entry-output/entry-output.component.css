@@ -18,6 +18,10 @@
   text-align: center;
 }
 
+div.dropdown-menu p{
+  text-align: justify;
+}
+
 /**************Desktop****************/
 @media (min-width: 900px) { 
   .info-block{
@@ -37,5 +41,20 @@
   height: 35vh;
 }
 
-
+@media (max-width: 900px){
+  #dailyCal{
+    font-size: 3.5em;
+  }
+  div.calories-result div.dropdown h3{
+    font-size: 2.5em;
+  }
+  div.macros-result div.dropdown h4,
+  div.dropdown-menu h5{
+    font-size: 2em;
+  }
+  div.dropdown-menu p,
+  div.macros-result p{
+    font-size: 1.5em;
+  }
+}
 
