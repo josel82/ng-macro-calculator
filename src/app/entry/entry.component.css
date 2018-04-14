@@ -1,9 +1,32 @@
 /******************************************************************************/
 /****************************  Media Queries **********************************/
 /******************************************************************************/
-@media (min-width: 768px) {
+
+@media (min-width: 600px) { 
   .btn-column{
     position: absolute;
     bottom: 0;
   }
+  #medium-to-large{
+    display: block !important;
+  }
+  #small-devices{
+    display: none;
+  }
+  /* #medium-to-large, #small-devices{
+    margin-top: 0 !important;
+  } */
 }
+
+#medium-to-large{
+  display: none;
+}
+
+#small-devices{
+  padding: 0 15px;
+}
+
+#medium-to-large, #small-devices{
+  margin-top: 30px;
+}
+

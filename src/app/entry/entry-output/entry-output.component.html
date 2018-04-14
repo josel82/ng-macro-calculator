@@ -1,4 +1,4 @@
-<div class="row" appDinamicHeight>
+<div class="row" id="output-block">
   <div class="col-xs-12 text-right">
     <p class="info-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</p>
     <div class="calories-result" *ngIf="dailyCal">
@@ -41,8 +41,8 @@
     </div>
   </div>
   </div>
-  <div class="row" appDinamicHeight>
-  <div class="col-sm-4 pull-right text-left">
+  <div class="row" id="bmr-tdee-block">
+  <div class="col-sm-4 pull-right text-left" id="control-block">
     <form [formGroup]="baseCalcForm">
       <div class="form-group">
         <div class="dropdown" appHintDropdown>

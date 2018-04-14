@@ -14,13 +14,19 @@ a{
 }
 
 #plus-box{
-  min-height: 132px;
-  max-width: 255px;
+  
   background-image: url('../../assets/img/plus.png');
   background-size: 30%;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.3;
+}
+
+@media (min-width: 600px){
+  .panel{
+    min-height: 132px !important;
+    max-width: 255px;
+  }
 }
 #headline{
   padding-bottom: 50px;
@@ -30,6 +36,9 @@ a{
   opacity: 0.5;
   margin-top: 2em;
 }
-.panel-entries{
-  max-width: 255px;
+
+.panel{
+  min-height: 200px;
 }
+
+

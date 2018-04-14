@@ -19,9 +19,23 @@
 }
 
 /**************Desktop****************/
-@media (min-width: 992px) { 
+@media (min-width: 900px) { 
   .info-block{
     text-align: right;
   }
+  #bmr-tdee-block, #output-block{
+    height: 35vh;
+  }
+  #control-block{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
+
+#output-block{
+  height: 35vh;
+}
+
+
 
