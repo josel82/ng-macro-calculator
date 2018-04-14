@@ -30,11 +30,12 @@ export class EntryOutputComponent implements OnInit {
       this.clearResults();
     });
     this.listenerService.inputFormSubmited.subscribe((inputForm)=>{
-      const formValues = this.dataService.formatFormValues(inputForm.value); 
+      const formValues = this.dataService.formatFormValues(inputForm.value);
       if(inputForm.valid){
+        
         let results = this.calculator.calculate(formValues);
         this.renderResults(results);
-        this.inputFormValues = inputForm;
+        this.inputFormValues = formValues;
       }
     });
   }
@@ -81,6 +82,8 @@ export class EntryOutputComponent implements OnInit {
   }
 
   onRefreshTDEE():void{
+    console.log(this.inputFormValues);
+    
     const bmr = this.baseCalcForm.get('bmr').value;
     const tdee = this.baseCalcForm.get('tdee').value;
     const results = this.calculator
