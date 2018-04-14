@@ -30,11 +30,10 @@
 </div>
 <div class="row" id="small-devices">
   <div class="col">
-
       <button type="button" name="calculate" class="btn btn-primary btn-lg btn-block" (click)="onCalculate()" [disabled]="!formValid">Calculate</button>
       <button type="button" name="clear" class="btn btn-default btn-lg btn-block" (click)="onClear()">Clear</button>
       <div  *ngIf="loggedIn; else soloSmall">
-        <button class="btn btn-primary btn-lg btn-block" type="button" (click)="onSave()" >Save</button>
+        <button class="btn btn-primary btn-lg btn-block" type="button" (click)="onSave()" style="margin-top: 20px">Save</button>
         <button class="btn btn-default btn-lg btn-block" type="button" (click)="onDelete()" [disabled]="isNewEntry">Delete</button>
         <button class="btn btn-default btn-lg btn-block" type="button" (click)="onBack()" >
           <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
