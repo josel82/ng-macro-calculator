@@ -74,4 +74,25 @@ export class CalculatorService {
     return Math.floor((totalCal * this.fatMult)/this.fatToCal);
   }
 
+  updateOutputWithDiffBMR(bmr ,form): { tdee:number, 
+                                        dailyCal:number, 
+                                        macros:{  protein:number,
+                                                  fat:number,
+                                                  carbs:number}}{
+    let tdee = this.calcTDEE(bmr, form.activityMult);
+    let dailyCal = this.calcTotalCal(tdee, form.goalMult);
+    let macros = this.splitMacros(dailyCal, form.weight);
+    return { tdee, dailyCal, macros};
+  }
+  
+  updateOutputWithDiffTDEE(tdee, form): { dailyCal:number, 
+                                          macros:{  protein:number,
+                                                    fat:number,
+                                                    carbs:number}}{
+    let dailyCal = this.calcTotalCal(tdee, form.goalMult);
+    let macros = this.splitMacros(dailyCal, form.weight);
+    return { dailyCal, macros};
+  }
+  
+
 }

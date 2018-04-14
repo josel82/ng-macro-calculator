@@ -37,6 +37,7 @@ export class EntryOutputComponent implements OnInit {
       if(formValues){
         let results = this.calculator.calculate(formValues);
         this.renderResults(results);
+        this.inputFormValues = formValues;
       }
     });
   }
@@ -60,6 +61,9 @@ export class EntryOutputComponent implements OnInit {
     this.fat = results.macros.fat;
     this.carbs = results.macros.carbs;
   }
+
+
+
   clearResults():void{
     this.baseCalcForm.reset();
     this.dailyCal = null;
@@ -75,8 +79,22 @@ export class EntryOutputComponent implements OnInit {
           this.baseCalcForm.get('tdee').value <= 1000;
   }
 
- validateBMR():boolean{
+  validateBMR():boolean{
     return this.baseCalcForm.invalid || this.baseCalcForm.get('bmr').value < 1000;
+  }
+
+  onRefreshTDEE():void{
+    const bmr = this.baseCalcForm.get('bmr').value;
+    const tdee = this.baseCalcForm.get('tdee').value;
+    const results = this.calculator
+                        .updateOutputWithDiffTDEE(tdee, this.inputFormValues);
+    this.renderResults({bmr, tdee, ...results});
+  }
+  onRefreshBMR():void{
+    const bmr = this.baseCalcForm.get('bmr').value;
+    const results = this.calculator
+                        .updateOutputWithDiffBMR(bmr, this.inputFormValues);
+    this.renderResults({bmr, ...results});
   }
 
 }
