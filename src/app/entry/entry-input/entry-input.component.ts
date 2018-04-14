@@ -38,6 +38,7 @@ export class EntryInputComponent implements OnInit{
     let entry = this.stgService.getItem(this.route.snapshot.params['index']);
     if(!entry){
       this.inputForm = this.initialiseForm(null);
+      this.listenerService.inputFormSubmited.next(this.inputForm);
       this.suscribeToStatusChange(this.inputForm);
       return;
     }

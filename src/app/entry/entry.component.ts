@@ -13,6 +13,7 @@ import { Entry } from '../models/entry.model';
 import { FormInput } from '../shared/form-input.interface';
 import { BackendService } from '../services/backend.service';
 import { SpinnerService } from '../services/spinner.service';
+import { ListenerService } from '../services/listener.service';
 
 
 @Component({
@@ -38,12 +39,17 @@ export class EntryComponent implements OnInit{
               private dataService: DataService,
               private controlService: ControlService,
               private spinnerService: SpinnerService,
-              private backend: BackendService) { }
+              private backend: BackendService,
+              private listenerService: ListenerService) { }
 
   async ngOnInit(){
     const credentials = await this.auth.getCredentials();
     this.loggedIn = credentials ? true : false;
     this.isNewEntry = this.setIsNewEntry(this.entryTitle);
+    this.listenerService.inputFormSubmited.subscribe((values)=>{
+      this.formValues = values;
+    });
+
   }
 
   onSubmit(values){ // Sets the values of the form ======================================================>
