@@ -6,11 +6,11 @@ import 'rxjs/add/operator/take';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 import { BackendService } from '../services/backend.service';
 import { UserCredentials } from './user-credentials.interface';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ModalService } from '../services/modal.service';
 import { default as config} from './modal.config';
 import { DataService } from '../services/data.service';
 import { ListenerService } from '../services/listener.service';
+import { SpinnerService } from '../services/spinner.service';
 
 interface AuthResponse{
   _id: string;
@@ -23,7 +23,7 @@ export class AuthService {
   constructor(private backend: BackendService,
               private localStorage: AsyncLocalStorage,
               private router: Router,
-              private spinnerService: Ng4LoadingSpinnerService,
+              private spinnerService: SpinnerService,
               private modalService: ModalService,
               private dataService: DataService,
               private listener: ListenerService){}
@@ -34,7 +34,7 @@ export class AuthService {
   loginUser(input: {email:string, password: string}){
     const loginRoute = `${this.backend.getUrl()}/users/login`;
     const getEntRoute = `${this.backend.getUrl()}/entries`;
-    this.spinnerService.show();
+    this.spinnerService.show("mySpinner");
     this.backend.loginUser(loginRoute, input).subscribe((response : HttpResponse<AuthResponse>)=>{
       const user ={
         userId: response.body._id,
@@ -43,13 +43,13 @@ export class AuthService {
       this.localStorage.setItem('user', user).subscribe(()=>{});
       this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
         this.listener.isLoggedIn.next(true);
-        this.spinnerService.hide();
+        this.spinnerService.hide("mySpinner");
         this.router.navigate(['/dashboard']);
       }).catch((error)=>console.log(error));
       
     },(error)=>{
       console.log(error);
-      this.spinnerService.hide();
+      this.spinnerService.hide("mySpinner");
       let key = this.errorHandler(error);
       let modalData = this.configureModal(key);
       this.modalService.showMsgModal(modalData, ()=>{});
@@ -64,15 +64,15 @@ export class AuthService {
     const route = `${this.backend.getUrl()}/users/me/token`;
     const credentials = await this.getCredentials();
     if(!credentials) return this.router.navigate(['/']);
-    this.spinnerService.show();
+    this.spinnerService.show("mySpinner");
     this.backend.logoutUser(route, credentials.token, 'text').subscribe((response)=>{
       this.listener.isLoggedIn.next(false);
-        this.spinnerService.hide();
+        this.spinnerService.hide("mySpinner");
         this.localStorage.clear().subscribe(()=>{});
         this.router.navigate(['/']);
       },(error)=>{
         console.log(error);
-        this.spinnerService.hide();
+        this.spinnerService.hide("mySpinner");
         let key = this.errorHandler(error);
         this.modalService.showMsgModal(this.configureModal(key),()=>{});
       });
@@ -84,7 +84,7 @@ export class AuthService {
   signupUser(input: {email:string, password: string}){
       const route = `${this.backend.getUrl()}/users`;
       const getEntRoute = `${this.backend.getUrl()}/entries`;
-      this.spinnerService.show();
+      this.spinnerService.show("mySpinner");
       this.backend.signUpUser(route, input).subscribe((response: HttpResponse<AuthResponse>)=>{
       let user = {
         userId: response.body._id,
@@ -93,12 +93,12 @@ export class AuthService {
       this.localStorage.setItem('user', user).subscribe(()=>{});
       this.dataService.downloadEntries(getEntRoute, user.token).then(()=>{
         this.listener.isLoggedIn.next(true);
-        this.spinnerService.hide();
+        this.spinnerService.hide("mySpinner");
         this.router.navigate(['/dashboard']);
       }).catch((error)=>console.log(error));
     },(error)=>{
       console.log(error);
-      this.spinnerService.hide();
+      this.spinnerService.hide("mySpinner");
       let key = this.errorHandler(error);
       this.modalService.showMsgModal(this.configureModal(key),()=>{});
     });

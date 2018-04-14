@@ -2,10 +2,13 @@
 <div class="container">
   <router-outlet></router-outlet>
 </div>
+<spinner name="mySpinner" [(show)]="showSpinner">
+    <div class="loader-container"></div>
+    <div class="loader">Loading...</div>
+</spinner> 
 <footer class="footer">
   <div class="container">
     <p>© 2018 MacroFit Project team. All rights reserved.</p>
   </div>
 </footer>
-<app-spinner></app-spinner>
 

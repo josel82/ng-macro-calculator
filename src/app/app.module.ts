@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 //************************  Components  ***************************
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,6 +16,7 @@ import { LandingComponent } from './landing/landing.component';
 import { EntryComponent } from './entry/entry.component';
 import { EntryInputComponent } from './entry/entry-input/entry-input.component';
 import { EntryOutputComponent } from './entry/entry-output/entry-output.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 //************************  Services  ***************************
 import { StorageService } from './services/storage.service';
 import { CalculatorService } from './services/calculator.service';
@@ -37,6 +37,7 @@ import { MsgModalComponent } from './modals/msg-modal/msg-modal.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SpinnerService } from './services/spinner.service';
 
 
 
@@ -59,7 +60,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SignupComponent,
     MsgModalComponent,
     SignupComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SimpleModalModule,
     HttpClientModule,
     AsyncLocalStorageModule,
-    Ng4LoadingSpinnerModule,
     AppRoutingModule
   ],
   entryComponents:[
@@ -85,7 +86,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     BackendService,
     AuthService,
     DataService,
-    AuthGuard
+    AuthGuard,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })

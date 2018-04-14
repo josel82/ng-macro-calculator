@@ -7,12 +7,12 @@ import { ModalService } from '../services/modal.service';
 import { ControlService } from '../services/control.service';
 import { DataService } from '../services/data.service';
 import { AuthService } from '../auth/auth.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { default as config} from './save-modal.config';
 
 import { Entry } from '../models/entry.model';
 import { FormInput } from '../shared/form-input.interface';
 import { BackendService } from '../services/backend.service';
+import { SpinnerService } from '../services/spinner.service';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class EntryComponent implements OnInit{
               private router: Router,
               private dataService: DataService,
               private controlService: ControlService,
-              private spinnerService: Ng4LoadingSpinnerService,
+              private spinnerService: SpinnerService,
               private backend: BackendService) { }
 
   async ngOnInit(){
@@ -89,21 +89,21 @@ export class EntryComponent implements OnInit{
       const id = this.stgService.getItem(this.route.snapshot.params['index']).get_id(); // fetch entry id
       const delRoute = `${this.backend.getUrl()}/entries/${id}`;
       const getRoute = `${this.backend.getUrl()}/entries`;
-      this.spinnerService.show();                             // show spinner
+      this.spinnerService.show("mySpinner");                             // show spinner
       
       this.backend.deleteEntry(delRoute, credentials.token, 'application/json').subscribe(()=>{
 
         this.dataService.downloadEntries(getRoute,credentials.token).then(()=>{
-          this.spinnerService.hide();
+          this.spinnerService.hide("mySpinner");
           this.router.navigate(['dashboard']); 
         }).catch((error)=>{
-          this.spinnerService.hide();  // hide spinner
+          this.spinnerService.hide("mySpinner");  // hide spinner
           console.log(error); // log error
           this.router.navigate(['/']); // navigate away
         });
 
       },(error)=>{
-          this.spinnerService.hide();
+          this.spinnerService.hide("mySpinner");
           let data = {modalTitle:'Alert', modalMsg:'Unable to connect to the server.'}
           this.modalService.showMsgModal(data,()=>{});
           console.log(error);
@@ -161,19 +161,19 @@ export class EntryComponent implements OnInit{
         const id = this.stgService.getItem(this.route.snapshot.params['index']).get_id(); // fetch Entry id
         const editRoute = `${this.backend.getUrl()}/entries/${id}`;           // api route for editing an entry
         const getRoute = `${this.backend.getUrl()}/entries`;                  // api route for getting all entries
-        this.spinnerService.show();                                 // shows spinner
+        this.spinnerService.show("mySpinner");                                 // shows spinner
         this.backend.editEntry(editRoute,newEntry,credentials.token).subscribe(()=>{ //reach api for editing entry
           this.backend.getEntries(getRoute, credentials.token).subscribe((resp)=>{   // reach api for getting all entries
-            this.spinnerService.hide();                             // hide spinner
+            this.spinnerService.hide("mySpinner");                             // hide spinner
             this.dataService.populateArray(resp.entries);           // populate local array of entries and rendering
             this.router.navigate(['dashboard']);                    // navigate to dashboard page
           },(error)=>{                  //if something goes wrong
-            this.spinnerService.hide(); // hide spinner
+            this.spinnerService.hide("mySpinner"); // hide spinner
             console.log('Not Authenticated.', error); // log error
             this.router.navigate(['/']); // navigate away
           });
         },(error)=>{
-            this.spinnerService.hide();
+            this.spinnerService.hide("mySpinner");
             let data = {modalTitle:'Alert', modalMsg:'Unable to connect to the server.'}
             this.modalService.showMsgModal(data,()=>{});
             console.log(error);
@@ -186,19 +186,19 @@ export class EntryComponent implements OnInit{
       this.modalService.showPromptModal(data, (response)=>{         // prompt user for a title 
         newEntry.title = response;                                  // set title
         const route = `${this.backend.getUrl()}/entries`;                     // api route for saving and fetching entries
-        this.spinnerService.show();                                 // show spinner
+        this.spinnerService.show("mySpinner");                                 // show spinner
         this.backend.saveEntry(route,newEntry,credentials.token).subscribe(()=>{ // reach api fro saving new entry
           this.backend.getEntries(route, credentials.token).subscribe((resp)=>{  // reach api for getting all entries
             this.dataService.populateArray(resp.entries);           // populate local array of entries and rendering
             this.router.navigate(['dashboard']);                    // navigate to dashboard page
-            this.spinnerService.hide();                             // hide spinner
+            this.spinnerService.hide("mySpinner");                             // hide spinner
           },(error)=>{                   //if something goes wrong
-            this.spinnerService.hide();  // hide spinner
+            this.spinnerService.hide("mySpinner");  // hide spinner
             console.log('Not Authenticated.', error); // log error
             this.router.navigate(['/']); // navigate away
           });
         },(error)=>{
-            this.spinnerService.hide();
+            this.spinnerService.hide("mySpinner");
             let data = {modalTitle:'Alert', modalMsg:'Unable to connect to the server.'}
             this.modalService.showMsgModal(data,()=>{});
             console.log(error);
