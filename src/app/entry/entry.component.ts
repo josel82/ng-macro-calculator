@@ -27,7 +27,7 @@ export class EntryComponent implements OnInit{
   private entryTitle;
   private stored:boolean;
   private loggedIn:boolean;
-  private formValid:boolean;
+  private formValid:boolean = false;
   private isNewEntry:boolean;
   private isChanged: boolean = false;
 
@@ -51,8 +51,10 @@ export class EntryComponent implements OnInit{
     });
     this.listenerService.isBaseFormValid.subscribe((valid)=>{
       this.isChanged = true;
-      console.log('observer');
-      
+    });
+    this.listenerService.isInputformValid.subscribe((valid)=>{
+      this.formValid = valid;
+      this.isChanged = true;
     });
   }
 
@@ -62,12 +64,6 @@ export class EntryComponent implements OnInit{
 
   setEntryTitle(title){ // Sets the title of the entry ==================================================>
     this.entryTitle = title;
-  }
-
-  setStatus(status){ // Listen to validation status of the InputForm ====================================>
-    this.formValid = status === 'VALID'? true: false;
-    this.isChanged = true;
-    console.log('emiter');
   }
 
   setIsNewEntry(title):boolean{ // Sets isNewEntry flag =================================================>

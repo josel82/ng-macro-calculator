@@ -16,8 +16,6 @@ import { ListenerService } from '../../services/listener.service';
 })
 export class EntryInputComponent implements OnInit{
 
-  // @Output() formEmitter = new EventEmitter<any>();
-  @Output() statusEmitter = new EventEmitter<any>();
   @Output() entryTitle = new EventEmitter<string>();
   private inputForm: FormGroup;
 
@@ -62,7 +60,8 @@ export class EntryInputComponent implements OnInit{
   }
   suscribeToStatusChange(form:FormGroup){
     form.statusChanges.subscribe((status:any)=>{
-      this.statusEmitter.emit(status); 
+      let valid = status === 'VALID'? true : false;
+      this.listenerService.isInputformValid.next(valid); 
     });
   }
 
