@@ -10,3 +10,10 @@ img#logo{
 #btn-box{
     margin-top: 100px;
 }
+
+.content p{
+    text-align: center;
+    padding-top: 20px;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
