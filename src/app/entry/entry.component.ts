@@ -29,6 +29,7 @@ export class EntryComponent implements OnInit{
   private loggedIn:boolean;
   private formValid:boolean;
   private isNewEntry:boolean;
+  private isChanged: boolean = false;
 
   constructor(private stgService: StorageService,
               private modalService: ModalService,
@@ -48,6 +49,11 @@ export class EntryComponent implements OnInit{
     this.listenerService.inputFormSubmited.subscribe((formControl: FormControl)=>{
       this.formValues = this.dataService.formatFormValues(formControl.value);
     });
+    this.listenerService.isBaseFormValid.subscribe((valid)=>{
+      this.isChanged = true;
+      console.log('observer');
+      
+    });
   }
 
   onSubmit(values){ // Sets the values of the form ======================================================>
@@ -60,12 +66,13 @@ export class EntryComponent implements OnInit{
 
   setStatus(status){ // Listen to validation status of the InputForm ====================================>
     this.formValid = status === 'VALID'? true: false;
+    this.isChanged = true;
+    console.log('emiter');
   }
 
   setIsNewEntry(title):boolean{ // Sets isNewEntry flag =================================================>
     return title? false : true;
   }
-
   // For both save and editing an entry =================================================================>
   async onSave(){ 
     const credentials = await this.auth.getCredentials(); //fetch user credentials from localStorage
@@ -119,6 +126,7 @@ export class EntryComponent implements OnInit{
 
   // Navigates to the Dashboard ========================================================================>
   onBack(){ 
+    if(!this.isChanged) return this.router.navigate(['dashboard']);
     let modalData = {
       modalTitle: 'Confirm',
       modalMsg: 'Do you want to leave without saving your changes?'

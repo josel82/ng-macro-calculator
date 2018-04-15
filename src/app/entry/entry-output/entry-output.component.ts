@@ -38,12 +38,20 @@ export class EntryOutputComponent implements OnInit {
         this.inputFormValues = formValues;
       }
     });
+    this.suscribeToStatusChange(this.baseCalcForm);
   }
 
   initialiseForm(): FormGroup{
     return new FormGroup({
       'tdee': new FormControl(null, Validators.required),
       'bmr': new FormControl(null, Validators.required)
+    });
+  }
+
+  suscribeToStatusChange(form:FormGroup){
+    form.statusChanges.subscribe((status:any)=>{
+      let valid = status === 'VALID'? true : false;
+      this.listenerService.isBaseFormValid.next(valid);
     });
   }
 
