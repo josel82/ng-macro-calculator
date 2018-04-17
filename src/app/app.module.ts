@@ -14,8 +14,6 @@ import { PromptModalComponent } from './modals/prompt-modal/prompt-modal.compone
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { LandingComponent } from './landing/landing.component';
 import { EntryComponent } from './entry/entry.component';
-import { EntryInputComponent } from './entry/entry-input/entry-input.component';
-import { EntryOutputComponent } from './entry/entry-output/entry-output.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 //************************  Services  ***************************
 import { StorageService } from './services/storage.service';
@@ -23,7 +21,6 @@ import { CalculatorService } from './services/calculator.service';
 import { ModalService } from './services/modal.service';
 import { ListenerService } from './services/listener.service';
 import { UnitConverterService } from './services/unit-converter.service';
-import { ControlService } from './services/control.service';
 import { BackendService } from './services/backend.service';
 import { AuthService } from './auth/auth.service';
 import { DataService } from './services/data.service';
@@ -54,8 +51,6 @@ import { SpinnerService } from './services/spinner.service';
     ConfirmModalComponent,
     LandingComponent,
     DinamicHeightDirective,
-    EntryInputComponent,
-    EntryOutputComponent,
     LoginComponent,
     SignupComponent,
     MsgModalComponent,
@@ -82,7 +77,6 @@ import { SpinnerService } from './services/spinner.service';
     ModalService,
     ListenerService,
     UnitConverterService,
-    ControlService,
     BackendService,
     AuthService,
     DataService,

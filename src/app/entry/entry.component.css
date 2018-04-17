@@ -15,6 +15,41 @@
   }
 }
 
+@media (min-width: 900px) { 
+  .info-block{
+    text-align: right;
+  }
+  #bmr-tdee-block, #output-block{
+    height: 35vh;
+  }
+  #control-block{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+#output-block{
+  height: 35vh;
+}
+
+@media (max-width: 900px){
+  #dailyCal{
+    font-size: 3.5em;
+  }
+  div.calories-result div.dropdown h3{
+    font-size: 2.5em;
+  }
+  div.macros-result div.dropdown h4,
+  div.dropdown-menu h5{
+    font-size: 2em;
+  }
+  div.dropdown-menu p,
+  div.macros-result p{
+    font-size: 1.5em;
+  }
+}
+
 #medium-to-large{
   display: none;
 }
@@ -25,5 +60,109 @@
 
 #medium-to-large, #small-devices{
   margin-top: 30px;
+}
+
+
+/******************************************************************************/
+/********************************* InputForm **********************************/
+/******************************************************************************/
+
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched
+{
+  border: 1px solid red;
+}
+span.help-block.alert-msg {
+  margin: 0 0 5px;
+  color:red;
+}
+
+/* Switch */
+.switch-container{
+  text-align: center;
+}
+.switch {
+  position: relative;
+  /* display: table-cell; */
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/******************************************************************************/
+/********************************* Dropdowns **********************************/
+/******************************************************************************/
+
+.hint {
+  padding: 10px;
+}
+.hint>h5{
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.glyphicon-question-sign{
+  font-size: 16px;
+}
+#dailyCal{
+  color: #428bca;
+}
+.info-block{
+  font-size: 1.4em;
+  opacity: 0.5;
+  text-align: center;
+}
+
+div.dropdown-menu p{
+  text-align: justify;
 }
 

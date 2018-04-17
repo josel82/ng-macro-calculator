@@ -58,10 +58,13 @@ export class DataService {
   }
 
   formatFormValues(values:{gender:number, age:number, weight:number, height:number, activityMult:number, goalMult:number, isImperial:boolean}){
+    
+    
     if(values.isImperial){
       values.weight = this.unitConverter.poundToKilo(values.weight);
       values.height = this.unitConverter.inchToCm(values.height);
     }
+    values.activityMult = +values.activityMult //Casts to number
     values.gender = +values.gender; //Casts to number
     return values
   }

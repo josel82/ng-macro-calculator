@@ -14,23 +14,14 @@ a{
 }
 
 #plus-box{
-  
   background-image: url('../../assets/img/plus.png');
-  background-size: 30%;
+  background-size: 22%;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.3;
 }
 
-@media (min-width: 600px){
-  .panel{
-    min-height: 132px !important;
-    max-width: 255px;
-  }
-  .panel-info{
-    font-size: 1em !important;
-  }
-}
+
 #headline{
   padding-bottom: 50px;
 }
@@ -38,6 +29,7 @@ a{
   text-align: center;
   opacity: 0.5;
   margin-top: 2em;
+  font-size: 2em;
 }
 
 .panel{
@@ -48,4 +40,20 @@ a{
   font-size: 1.5em;
 }
 
+/****************** MEDIA QUERIES *********************/
+@media (min-width: 600px){
+  .panel{
+    min-height: 132px !important;
+    max-width: 255px;
+  }
+  .panel-info{
+    font-size: 1em !important;
+  }
 
+  #plus-box{
+    background-size: 30%;
+  }
+  #help-block{
+    font-size: 36px;
+  }
+}
