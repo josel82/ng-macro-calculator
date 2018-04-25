@@ -27,19 +27,22 @@
     bottom: 0;
     right: 0;
   }
-}
-
-#output-block{
-  height: 35vh;
+  app-chart{
+    position: relative;
+    min-width: 450px;
+    right: 120px;
+  }
 }
 
 @media (max-width: 900px){
   #dailyCal{
     font-size: 3.5em;
+    padding-bottom: 20px;
   }
   div.calories-result div.dropdown h3{
     font-size: 2.5em;
   }
+  div.calories-result div.dropdown h4,
   div.macros-result div.dropdown h4,
   div.dropdown-menu h5{
     font-size: 2em;
@@ -61,7 +64,9 @@
 #medium-to-large, #small-devices{
   margin-top: 30px;
 }
-
+.spacer{
+  height: 35vh;
+}
 
 /******************************************************************************/
 /********************************* InputForm **********************************/
@@ -165,4 +170,9 @@ input:checked + .slider:before {
 div.dropdown-menu p{
   text-align: justify;
 }
+
+/******************************************************************************/
+/********************************* Canvas **********************************/
+/******************************************************************************/
+
 

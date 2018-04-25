@@ -4,126 +4,133 @@
     <!--============================================================================================= 
     ========================================== OUTPUT BLOCK ========================================= 
     ===============================================================================================-->
-      <div class="row" id="output-block">
-          <div class="col-xs-12 text-right">
-            <p class="info-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</p>
-            <!-- calories-result =============================================-->
-            <div class="calories-result" *ngIf="dailyCal"> 
-              <div class="dropdown" appHintDropdown>
-                <h3>
-                  <span class="glyphicon glyphicon-question-sign"></span>
-                  Daily Calories
-                </h3>
-                <!-- dropdown-menu ===========================================-->
-                <div class="dropdown-menu hint" aria-labelledby="result-hint">
-                  <h5>Daily Calorie Goal</h5>
-                  <p>This is the daily maximun amount of calories you should consume in order to hit your fitness goal.</p>
-                </div><!-- dropdown-menu end -->
-              </div>
-              <h2 id="dailyCal"><strong>{{ dailyCal }}</strong> kcal/day</h2>
-            </div> <!-- End calories-result -->
+    <div class="row" id="output-block" [ngClass]="{spacer: dailyCal===undefined} ">
+      <div class="col-md-6">
+        <p class="info-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</p>
+        <!-- calories-result =============================================-->
+        <div class="calories-result" *ngIf="dailyCal">
+          <div class="dropdown" appHintDropdown>
+            <h4>
+              <span class="glyphicon glyphicon-question-sign"></span>
+              Daily Calories
+            </h4>
+            <!-- dropdown-menu ===========================================-->
+            <div class="dropdown-menu hint" aria-labelledby="result-hint">
+              <h5>Daily Calorie Goal</h5>
+              <p>This is the daily maximun amount of calories you should consume in order to hit your fitness goal.</p>
+            </div>
+            <!-- dropdown-menu end -->
+          </div>
+          <h2 id="dailyCal">
+            <strong>{{ dailyCal }}</strong> kcal/day</h2>
+        </div>
+        <!-- End calories-result -->
+      </div>
+      <!-- End col-xs-12 -->
 
-            <!-- macros-result ===============================================-->
-            <div class="macros-result" *ngIf="carbs && protein && fat">
-              <div class="dropdown" appHintDropdown>
-                <h4>
-                  <span class="glyphicon glyphicon-question-sign"></span>
-                  Macros Split
-                </h4>
-                <!-- dropdown-menu ===========================================-->
-                <div class="dropdown-menu hint" aria-labelledby="result-hint">
-                  <h5>Macros Split</h5>
-                  <p>This is your Daily Calorie Goal split into the three macro nutrients. These is the maximun amount of
-                    <strong>Carbohydrates</strong>,
-                    <strong>Protein</strong>  and
-                    <strong>Fats</strong>,
-                    in grams per day, you should consume in order to hit your fitness goal
-                  </p>
-                </div><!-- dropdown-menu end -->
-              </div>
-              <p>Carbs</p>
-              <p><strong>{{ carbs }} g</strong></p>
-              <p>Protein</p>
-              <p><strong>{{ protein }} g</strong></p>
-              <p>Fats</p>
-              <p><strong>{{ fat }} g</strong></p>
-            </div> <!-- End macro-result -->
-          </div> <!-- End col-xs-12 -->
-        </div> <!-- End output-block -->
+      <div class="col-md-6 ">
+        <!-- macros-result ===============================================-->
+        <div class="macros-result" *ngIf="carbs && protein && fat">
+          <div class="dropdown" appHintDropdown>
+            <h4>
+              <span class="glyphicon glyphicon-question-sign"></span>
+              Macros Split
+            </h4>
+            <!-- dropdown-menu ===========================================-->
+            <div class="dropdown-menu hint" aria-labelledby="result-hint">
+              <h5>Macros Split</h5>
+              <p>This is your Daily Calorie Goal split into the three macro nutrients. These is the maximun amount of
+                <strong>Carbohydrates</strong>,
+                <strong>Protein</strong> and
+                <strong>Fats</strong>, in grams per day, you should consume in order to hit your fitness goal
+              </p>
+            </div>
+            <!-- dropdown-menu end -->
+          </div>
+          <!-- <p>Carbs</p>
+                          <p><strong>{{ carbs }} g</strong></p>
+                          <p>Protein</p>
+                          <p><strong>{{ protein }} g</strong></p>
+                          <p>Fats</p>
+                          <p><strong>{{ fat }} g</strong></p> -->
+          <app-chart [carbs]="carbs" [protein]="protein" [fat]="fat" style="display: block;" #chart></app-chart>
+        </div>
+        <!-- End macro-result -->
+      </div>
+    </div>
+    <!-- End output-block -->
 
-        <!--=========================================================================================== 
+    <!--=========================================================================================== 
         ====================================== BMR TDEE BLOCK =========================================
         ===============================================================================================-->
-        <div class="row" id="bmr-tdee-block">
-          <div class="col-sm-4 pull-right text-left" id="control-block">
-            <!-- baseClacForm ==============================================-->
-            <form [formGroup]="baseCalcForm" *ngIf="carbs && protein && fat">
-              <!-- TDEE form-group =========================================-->
-              <div class="form-group"> 
-                <!-- hint-dropdown =========================================-->
-                <div class="dropdown" appHintDropdown>
-                  <label for="tdee"
-                         class="dropdown-toogle"
-                         id="tdee-hint"
-                         data-toggle="dropdown"
-                         aria-haspopup="true"
-                         aria-expanded="true"
-                         >
-                         <span class="glyphicon glyphicon-question-sign"></span>
-                         TDEE: (kcal/day)
-                  </label>
-                  <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
-                    <h5>Total Daily Calorie Expenditure</h5>
-                    <p>This is the amount of calories you burn per day, based on your level of activity</p>
-                  </div>
-                </div> <!-- End hint-dropdown -->
+    <div class="row" id="bmr-tdee-block">
+      <div class="col-sm-4 pull-right text-left" id="control-block">
+        <!-- baseClacForm ==============================================-->
+        <form [formGroup]="baseCalcForm" *ngIf="carbs && protein && fat">
+          <!-- TDEE form-group =========================================-->
+          <div class="form-group">
+            <!-- hint-dropdown =========================================-->
+            <div class="dropdown" appHintDropdown>
+              <label for="tdee" class="dropdown-toogle" id="tdee-hint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                TDEE: (kcal/day)
+              </label>
+              <div class="dropdown-menu hint" aria-labelledby="tdee-hint">
+                <h5>Total Daily Calorie Expenditure</h5>
+                <p>This is the amount of calories you burn per day, based on your level of activity</p>
+              </div>
+            </div>
+            <!-- End hint-dropdown -->
 
-                <!-- TDEE input-group =======================================-->
-                <div class="input-group">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" (click)="onRefreshTDEE()" [disabled]="validateTDEE()">
-                      <span class="glyphicon glyphicon-refresh"></span>
-                    </button>
-                  </span>
-                  <input type="number" name="tdee" class="form-control" formControlName="tdee" min="0">
-                </div> <!-- End TDEE input-group -->
-              </div> <!-- End TDEE form-group -->
+            <!-- TDEE input-group =======================================-->
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="onRefreshTDEE()" [disabled]="validateTDEE()">
+                  <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+              </span>
+              <input type="number" name="tdee" class="form-control" formControlName="tdee" min="0">
+            </div>
+            <!-- End TDEE input-group -->
+          </div>
+          <!-- End TDEE form-group -->
 
-              <!-- BMR form-group =========================================-->
-              <div class="form-group">
-                 <!-- hint-dropdown =========================================-->
-                <div class="dropdown" appHintDropdown>
-                  <label for="bmr"
-                         class="dropdown-toogle"
-                         id="bmr-hint"
-                         data-toggle="dropdown"
-                         aria-haspopup="true"
-                         aria-expanded="true"
-                         >
-                         <span class="glyphicon glyphicon-question-sign"></span>
-                         BMR: (kcal/day)
-                  </label>
-                  <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
-                    <h5>Basal Methabolic Rate</h5>
-                    <p>This is the daily amount of calories your body needs for breathing and generating heat.</p>
-                    <p>Based on Mifflin-St Jeor’s formula.</p>
-                  </div>
-                </div> <!-- End hint-dropdown -->
+          <!-- BMR form-group =========================================-->
+          <div class="form-group">
+            <!-- hint-dropdown =========================================-->
+            <div class="dropdown" appHintDropdown>
+              <label for="bmr" class="dropdown-toogle" id="bmr-hint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                BMR: (kcal/day)
+              </label>
+              <div class="dropdown-menu hint" aria-labelledby="bmr-hint">
+                <h5>Basal Methabolic Rate</h5>
+                <p>This is the daily amount of calories your body needs for breathing and generating heat.</p>
+                <p>Based on Mifflin-St Jeor’s formula.</p>
+              </div>
+            </div>
+            <!-- End hint-dropdown -->
 
-                <!-- BMR input-group =======================================-->
-                <div class="input-group">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" (click)="onRefreshBMR()" [disabled]="validateBMR()">
-                      <span class="glyphicon glyphicon-refresh"></span>
-                    </button>
-                  </span>
-                  <input type="number" name="bmr" class="form-control" formControlName="bmr" min="0">
-                </div><!-- End BMR input-group-->
-              </div><!-- End BMR form-group -->
-            </form> <!-- End baseClacForm -->
-          </div> <!-- End col-sm-4 -->
-        </div> <!-- End row BMR-TDEE-BLOCK -->
-  </div> <!-- End col-md-6 col-md-push-6 -->
+            <!-- BMR input-group =======================================-->
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="onRefreshBMR()" [disabled]="validateBMR()">
+                  <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+              </span>
+              <input type="number" name="bmr" class="form-control" formControlName="bmr" min="0">
+            </div>
+            <!-- End BMR input-group-->
+          </div>
+          <!-- End BMR form-group -->
+        </form>
+        <!-- End baseClacForm -->
+      </div>
+      <!-- End col-sm-4 -->
+    </div>
+    <!-- End row BMR-TDEE-BLOCK -->
+  </div>
+  <!-- End col-md-6 col-md-push-6 -->
 
   <!--============================================================================================= 
     ========================================== INPUT FORM ========================================= 
@@ -136,26 +143,30 @@
 
           <div class="form-group">
             <label for="gender">Gender:</label>
-            <span class="help-block alert-msg pull-right"
-                  *ngIf="!inputForm.get('gender').valid && inputForm.get('gender').touched">
-                  Invalid input!
+            <span class="help-block alert-msg pull-right" *ngIf="!inputForm.get('gender').valid && inputForm.get('gender').touched">
+              Invalid input!
             </span>
             <br>
-            <label class="radio-inline"><input type="radio" name="gender" value="1" formControlName="gender">Female</label>
-            <label class="radio-inline"><input type="radio" name="gender" value="0" formControlName="gender">Male</label>
-          </div> <!-- End Gender form-group -->
+            <label class="radio-inline">
+              <input type="radio" name="gender" value="1" formControlName="gender">Female</label>
+            <label class="radio-inline">
+              <input type="radio" name="gender" value="0" formControlName="gender">Male</label>
+          </div>
+          <!-- End Gender form-group -->
 
           <div class="form-group">
             <label for="age">Age:</label>
-            <span class="help-block alert-msg pull-right"
-                  *ngIf="!inputForm.get('age').valid && inputForm.get('age').touched">
-                  Invalid input!
+            <span class="help-block alert-msg pull-right" *ngIf="!inputForm.get('age').valid && inputForm.get('age').touched">
+              Invalid input!
             </span>
             <input type="number" name="age" class="form-control" formControlName="age" min="1">
-          </div> <!-- End Age form-group -->
+          </div>
+          <!-- End Age form-group -->
 
-        </div> <!-- End col-md-8 -->
-      </div> <!-- End row -->
+        </div>
+        <!-- End col-md-8 -->
+      </div>
+      <!-- End row -->
 
       <div class="row">
         <div class="col-md-8">
@@ -163,48 +174,43 @@
           <div class="form-group">
             <label for="weight">Weight</label>
             <span [ngSwitch]="validateWeightControl(inputForm)">
-                <span class="help-block alert-msg pull-right"
-                      *ngSwitchCase="'INVALID'">
-                       Invalid input!
-                </span>
-                <span class="help-block info-msg pull-right"
-                      *ngSwitchCase="'METRIC'">
-                      Your weight in kilograms
-                </span>
-                <span class="help-block info-msg pull-right"
-                      *ngSwitchCase="'IMPERIAL'">
-                      Your weight in pounds
-                </span>
+              <span class="help-block alert-msg pull-right" *ngSwitchCase="'INVALID'">
+                Invalid input!
+              </span>
+              <span class="help-block info-msg pull-right" *ngSwitchCase="'METRIC'">
+                Your weight in kilograms
+              </span>
+              <span class="help-block info-msg pull-right" *ngSwitchCase="'IMPERIAL'">
+                Your weight in pounds
+              </span>
             </span>
             <input type="number" name="weight" class="form-control" formControlName="weight" min="5">
-          </div> <!-- End Weight control -->
+          </div>
+          <!-- End Weight control -->
 
           <!-- Height control =================-->
           <div class="form-group">
             <label for="height">Height</label>
             <span [ngSwitch]="validateHeightControl(inputForm)">
-              <span class="help-block alert-msg pull-right"
-                    *ngSwitchCase="'INVALID'">
-                     Invalid input!
+              <span class="help-block alert-msg pull-right" *ngSwitchCase="'INVALID'">
+                Invalid input!
               </span>
-              <span class="help-block info-msg pull-right"
-                    *ngSwitchCase="'METRIC'">
-                    Your height in centimeters
+              <span class="help-block info-msg pull-right" *ngSwitchCase="'METRIC'">
+                Your height in centimeters
               </span>
-              <span class="help-block info-msg pull-right"
-                    *ngSwitchCase="'IMPERIAL'">
-                    Your height in inches
+              <span class="help-block info-msg pull-right" *ngSwitchCase="'IMPERIAL'">
+                Your height in inches
               </span>
-          </span>
+            </span>
             <input type="number" name="height" class="form-control" formControlName="height" min="60">
-          </div> <!-- End Height control -->
+          </div>
+          <!-- End Height control -->
 
           <!-- ActivityMult control =================-->
           <div class="form-group">
             <label for="activityMult">Level of Activity:</label>
-            <span class="help-block alert-msg pull-right"
-                  *ngIf="!inputForm.get('activityMult').valid && inputForm.get('activityMult').touched">
-                  Invalid input!
+            <span class="help-block alert-msg pull-right" *ngIf="!inputForm.get('activityMult').valid && inputForm.get('activityMult').touched">
+              Invalid input!
             </span>
             <select class="form-control" name="activityMult" formControlName="activityMult">
               <option value="1.2">Sedentary</option>
@@ -213,23 +219,25 @@
               <option value="1.725">Very Active</option>
               <option value="1.9">Extremely Active</option>
             </select>
-          </div> <!-- End ActivityMult control -->
+          </div>
+          <!-- End ActivityMult control -->
 
           <!-- GoalMult control =================-->
           <div class="form-group">
             <label for="goalMult">Fitness Goal:</label>
-            <span class="help-block alert-msg pull-right"
-                  *ngIf="!inputForm.get('goalMult').valid && inputForm.get('goalMult').touched">
-                  Invalid input!
+            <span class="help-block alert-msg pull-right" *ngIf="!inputForm.get('goalMult').valid && inputForm.get('goalMult').touched">
+              Invalid input!
             </span>
             <select class="form-control" name="goalMult" formControlName="goalMult">
               <option value="1.15">Gain mass</option>
               <option value="1">Maintain weight</option>
               <option value="0.85">Lose weight</option>
             </select>
-          </div> <!-- End GoalMult -->
+          </div>
+          <!-- End GoalMult -->
 
-        </div> <!-- End col-md-8 -->
+        </div>
+        <!-- End col-md-8 -->
 
         <!-- IsImperial control =================-->
         <div class="col-md-4">
@@ -240,11 +248,16 @@
               <span class="slider round"></span>
             </label>
           </div>
-        </div> <!-- End isImperial control -->
-      </div> <!-- End row -->
-    </form> <!-- End inputForm FormGroup -->
-  </div> <!-- End col-md-6 col-md-pull-6 -->
-</div> <!-- End row -->
+        </div>
+        <!-- End isImperial control -->
+      </div>
+      <!-- End row -->
+    </form>
+    <!-- End inputForm FormGroup -->
+  </div>
+  <!-- End col-md-6 col-md-pull-6 -->
+</div>
+<!-- End row -->
 
 <!--=============================================================================================== 
     ========================================== BUTTONS ============================================ 
@@ -256,60 +269,54 @@
       <button type="button" name="calculate" class="btn btn-primary" (click)="onCalculate()" [disabled]="inputForm.invalid">Calculate</button>
       <button type="button" name="clear" class="btn btn-default" (click)="onClear()">Clear</button>
     </div>
-  </div> <!-- End Calculate/Clear  -->
+  </div>
+  <!-- End Calculate/Clear  -->
 
   <div class="col-xs-6">
     <div class="btn-group pull-right" role="group" *ngIf="loggedIn; else solo">
-      <button class="btn btn-primary" 
-              type="button" 
-              (click)="onSave()" 
-              [disabled]="inputForm.invalid || baseCalcForm.invalid"
-              >Save</button>
-      <button class="btn btn-default" 
-              type="button" 
-              (click)="onDelete()" 
-              [disabled]="isNewEntry">Delete</button>
-      <button class="btn btn-default" type="button" (click)="onBack()" >
+      <button class="btn btn-primary" type="button" (click)="onSave()" [disabled]="inputForm.invalid || baseCalcForm.invalid">Save</button>
+      <button class="btn btn-default" type="button" (click)="onDelete()" [disabled]="isNewEntry">Delete</button>
+      <button class="btn btn-default" type="button" (click)="onBack()">
         <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
-    </div> <!-- End IF loggedIn -->
+    </div>
+    <!-- End IF loggedIn -->
 
     <ng-template #solo>
       <a class="btn btn-default pull-right" role="button" routerLink="/">
         <span class="glyphicon glyphicon-chevron-left"></span>
         Back
       </a>
-    </ng-template><!-- End ELSE -->
+    </ng-template>
+    <!-- End ELSE -->
 
-  </div> <!-- End Save/Delete/Back -->
-</div> <!-- End medium-to-large -->
+  </div>
+  <!-- End Save/Delete/Back -->
+</div>
+<!-- End medium-to-large -->
 
 <div class="row" id="small-devices">
   <div class="col">
-      <!-- ==============Calculate/Clear==============-->
-      <button type="button" name="calculate" class="btn btn-primary btn-lg btn-block" (click)="onCalculate()" [disabled]="inputForm.invalid">Calculate</button>
-      <button type="button" name="clear" class="btn btn-default btn-lg btn-block" (click)="onClear()">Clear</button>
-      <!-- ==============Calculate/Clear==============-->
+    <!-- ==============Calculate/Clear==============-->
+    <button type="button" name="calculate" class="btn btn-primary btn-lg btn-block" (click)="onCalculate()" [disabled]="inputForm.invalid">Calculate</button>
+    <button type="button" name="clear" class="btn btn-default btn-lg btn-block" (click)="onClear()">Clear</button>
+    <!-- ==============Calculate/Clear==============-->
 
-      <div  *ngIf="loggedIn; else soloSmall">
-        <button class="btn btn-primary btn-lg btn-block" 
-                type="button" 
-                (click)="onSave()" 
-                style="margin-top: 20px" 
-                [disabled]="inputForm.invalid || baseCalcForm.invalid"
-                >Save</button>
-        <button class="btn btn-default btn-lg btn-block" 
-                type="button" 
-                (click)="onDelete()" 
-                [disabled]="isNewEntry">Delete</button>
-        <button class="btn btn-default btn-lg btn-block" type="button" (click)="onBack()" >
-          <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
-      </div><!-- End IF soloSmall -->
-      <ng-template #soloSmall>
-        <a class="btn btn-default btn-lg btn-block" role="button" routerLink="/">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-          Back
-        </a>
-      </ng-template> <!-- End ELSE -->
-    
-  </div> <!-- End col -->
-</div><!-- End small-devices -->
+    <div *ngIf="loggedIn; else soloSmall">
+      <button class="btn btn-primary btn-lg btn-block" type="button" (click)="onSave()" style="margin-top: 20px" [disabled]="inputForm.invalid || baseCalcForm.invalid">Save</button>
+      <button class="btn btn-default btn-lg btn-block" type="button" (click)="onDelete()" [disabled]="isNewEntry">Delete</button>
+      <button class="btn btn-default btn-lg btn-block" type="button" (click)="onBack()">
+        <span class="glyphicon glyphicon-chevron-left"></span>Back</button>
+    </div>
+    <!-- End IF soloSmall -->
+    <ng-template #soloSmall>
+      <a class="btn btn-default btn-lg btn-block" role="button" routerLink="/">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Back
+      </a>
+    </ng-template>
+    <!-- End ELSE -->
+
+  </div>
+  <!-- End col -->
+</div>
+<!-- End small-devices -->

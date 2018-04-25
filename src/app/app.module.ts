@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
+import { ChartsModule } from 'ng2-charts';
 //************************  Components  ***************************
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,6 +35,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SpinnerService } from './services/spinner.service';
+import { ChartComponent } from './entry/chart/chart.component';
 
 
 
@@ -54,7 +56,8 @@ import { SpinnerService } from './services/spinner.service';
     MsgModalComponent,
     SignupComponent,
     PageNotFoundComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { SpinnerService } from './services/spinner.service';
     SimpleModalModule,
     HttpClientModule,
     AsyncLocalStorageModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule
   ],
   entryComponents:[
     PromptModalComponent,
