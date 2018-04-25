@@ -182,6 +182,7 @@ export class EntryComponent implements OnInit{
 
   onCalculate():void{
     this.renderResults(this.calculator.calculate(this.inputForm.value));
+    window.scrollTo(0, 0);
   }
 
   onRefreshTDEE():void{

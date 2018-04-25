@@ -57,7 +57,7 @@
         <div class="row" id="bmr-tdee-block">
           <div class="col-sm-4 pull-right text-left" id="control-block">
             <!-- baseClacForm ==============================================-->
-            <form [formGroup]="baseCalcForm">
+            <form [formGroup]="baseCalcForm" *ngIf="carbs && protein && fat">
               <!-- TDEE form-group =========================================-->
               <div class="form-group"> 
                 <!-- hint-dropdown =========================================-->
@@ -193,7 +193,7 @@
               </span>
               <span class="help-block info-msg pull-right"
                     *ngSwitchCase="'IMPERIAL'">
-                    Your weight in inches
+                    Your height in inches
               </span>
           </span>
             <input type="number" name="height" class="form-control" formControlName="height" min="60">

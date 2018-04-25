@@ -9,6 +9,7 @@
         <ul class="dropdown-menu">
           <li><a [routerLink]="'/signup'" *ngIf="!loggedIn">Sign up</a></li>
           <li><a [routerLink]="'/login'" *ngIf="!loggedIn">Log in</a></li>
+          <li><a href="https://goo.gl/forms/oYiGax95UCLb3tsV2">Survey</a></li>
           <li><a id="logout" (click)="onLogout()" *ngIf="loggedIn">Log out</a></li>
         </ul>
       </li>

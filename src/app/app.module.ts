@@ -27,7 +27,6 @@ import { DataService } from './services/data.service';
 //************************  Directives  ***************************
 import { DropdownDirective } from './directives/dropdown.directive';
 import { HintDropdownDirective } from './directives/hint-dropdown.directive';
-import { DinamicHeightDirective } from './directives/dinamic-height.directive';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MsgModalComponent } from './modals/msg-modal/msg-modal.component';
@@ -50,7 +49,6 @@ import { SpinnerService } from './services/spinner.service';
     PromptModalComponent,
     ConfirmModalComponent,
     LandingComponent,
-    DinamicHeightDirective,
     LoginComponent,
     SignupComponent,
     MsgModalComponent,
