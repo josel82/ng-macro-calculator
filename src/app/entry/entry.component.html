@@ -5,8 +5,10 @@
     ========================================== OUTPUT BLOCK ========================================= 
     ===============================================================================================-->
     <div class="row" id="output-block" [ngClass]="{spacer: dailyCal===undefined} ">
+      <div class="col" *ngIf="!dailyCal">
+          <p class="info-block" >Lets calculate your macros, shall we?</p>
+      </div>
       <div class="col-md-6">
-        <p class="info-block" *ngIf="!dailyCal">Lets calculate your macros, shall we?</p>
         <!-- calories-result =============================================-->
         <div class="calories-result" *ngIf="dailyCal">
           <div class="dropdown" appHintDropdown>

@@ -16,9 +16,7 @@
 }
 
 @media (min-width: 900px) { 
-  .info-block{
-    text-align: right;
-  }
+
   #bmr-tdee-block, #output-block{
     height: 35vh;
   }
@@ -31,6 +29,12 @@
     position: relative;
     min-width: 450px;
     right: 120px;
+  }
+}
+
+@media (min-width: 992px){
+  #output-block > div.col > p{
+    text-align: right;
   }
 }
 
